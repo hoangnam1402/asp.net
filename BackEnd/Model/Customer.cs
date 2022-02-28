@@ -6,8 +6,7 @@ namespace BackEnd.Model
     public class Customer
     {
         [Key]
-        [StringLength(10)]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         [StringLength(50)]
         public string name { get; set; }

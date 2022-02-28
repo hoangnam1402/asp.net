@@ -1,0 +1,26 @@
+﻿@page
+@model PrivacyModel
+@{
+    ViewData["Title"] = "Product";
+}
+
+@foreach(var x in Model.products)
+{
+    <div class="container">
+        <div class="ProductList">
+            <div class="card">
+                <div class="imgBox">
+                    <img />
+                </div>
+                <div class="content">
+                    <div class="productName">
+                        <h3>@x.name</h3>
+                    </div>
+                    <div class="price_rating">
+                        <h2>@x.cost</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

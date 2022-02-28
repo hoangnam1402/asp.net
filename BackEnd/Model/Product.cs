@@ -6,8 +6,7 @@ namespace BackEnd.Model
     public class Product
     {
         [Key]
-        [StringLength(10)]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         [StringLength(50)]
         public string name { get; set; }
@@ -20,5 +19,9 @@ namespace BackEnd.Model
         public int inventory { get; set; }
 
         public bool stopped { get; set; }
+
+        public Guid CategoryId { get; set; } 
+
+        public Category ? Category { get; set; }
     }
 }

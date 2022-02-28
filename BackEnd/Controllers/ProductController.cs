@@ -23,7 +23,7 @@ namespace BackEnd.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProductInfo(string id)
+        public async Task<ActionResult<Product>> GetProductInfo(Guid id)
         {
             var product = await _context.products.FindAsync(id);
             if (product == null)
@@ -59,7 +59,7 @@ namespace BackEnd.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Product>> DeleteProduct(string id)
+        public async Task<ActionResult<Product>> DeleteProduct(Guid id)
         {
             var product = await _context.products.FindAsync(id);
             if (product == null)

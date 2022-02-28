@@ -6,10 +6,11 @@ namespace BackEnd.Model
     public class Category
     {
         [Key]
-        [StringLength(20)]
-        public string CategoryId { set; get; }
+        public Guid CategoryId { set; get; }
 
         [Column(TypeName = "ntext")]
-        public string Content { set; get; }
+        public string ? Content { set; get; }
+
+        public List<Product> ? Products { get; set; }
     }
 }

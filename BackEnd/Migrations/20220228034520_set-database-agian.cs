@@ -4,7 +4,7 @@
 
 namespace BackEnd.Migrations
 {
-    public partial class addcustomertable : Migration
+    public partial class setdatabaseagian : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
