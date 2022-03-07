@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using BackEnd.Data;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using BackEnd.DTO.CategoryDTO;
+using EnsureThat;
 
 namespace BackEnd.Controllers
 {
@@ -10,38 +13,47 @@ namespace BackEnd.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public CategoryController(ApplicationDbContext context)
+        public CategoryController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Category>>> Get()
+        public async Task<ActionResult<List<ReadCategoryDto>>> Get()
         {
-            return Ok(await _context.categories.ToListAsync());
+            var category = await _context.categories.ToListAsync();
+            if (category == null)
+                return BadRequest("Category not found.");
+
+            var response = _mapper.Map<List<ReadCategoryDto>>(category);
+            return Ok(response);
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Category>>> AddCategory(Category category)
+        public async Task<ActionResult<List<CreateCategoryDto>>> AddCategory(CreateCategoryDto newCategory)
         {
+            Ensure.Any.IsNotNull(newCategory, nameof(newCategory));
+            var category = _mapper.Map<Category>(newCategory);
+
             _context.categories.Add(category);
             await _context.SaveChangesAsync();
 
-            return Ok(await _context.categories.ToListAsync());
+            return Ok(category);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Category>> DeleteCategory(Guid id)
+        public async Task<ActionResult> DeleteCategory(Guid id)
         {
-            var category = await _context.categories.FindAsync(id);
+            var category = await _context.categories.FirstOrDefaultAsync(x => x.CategoryId == id);
             if (category == null)
                 return BadRequest("Category not found.");
 
             _context.categories.Remove(category);
             await _context.SaveChangesAsync();
 
-            return Ok(await _context.categories.ToListAsync());
             return Ok(await _context.categories.ToListAsync());
         }
     }

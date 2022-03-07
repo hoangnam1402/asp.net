@@ -6,6 +6,8 @@ namespace BackEnd.DTO.ProductDTO
 {
     public class UpdateProductDto
     {
+        public Guid Id { get; set; }
+
         [StringLength(50)]
         public string name { get; set; }
 
@@ -20,6 +22,5 @@ namespace BackEnd.DTO.ProductDTO
 
         public Guid? CategoryId { get; set; }
 
-        public CategoryDto ? Category { get; set; }
     }
 }

@@ -8,6 +8,8 @@ namespace BackEnd.Model
         [Key]
         public Guid CategoryId { set; get; }
 
+        public string CategoryName { set; get; }
+
         [Column(TypeName = "ntext")]
         public string ? Content { set; get; }
 

@@ -4,6 +4,7 @@ using BackEnd.Data;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using BackEnd.DTO.ProductDTO;
+using EnsureThat;
 
 namespace BackEnd.Controllers
 {
@@ -21,7 +22,7 @@ namespace BackEnd.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ReadProductDto>>> Get(int page)
+        public async Task<ActionResult<List<ReadProductDto>>> GetAllProduct(int page)
         {
             if  (_context.products == null)
             {
@@ -31,12 +32,13 @@ namespace BackEnd.Controllers
             var pageResults = 3f;
             var pageCount = Math.Ceiling(_context.products.Count() / pageResults);
 
-            var productResponse = await _context.products
+            var product = await _context.products
+                .Where(x => x.stopped == true)
                 .Skip((page - 1) * (int)pageResults)
                 .Take((int)pageResults)
                 .ToListAsync();
 
-            var productDtoResponse = _mapper.Map<List<ReadProductDto>>(productResponse);
+            var productDtoResponse = _mapper.Map<List<ReadProductDto>>(product);
 
             var response = new ProductResponseDto
             {
@@ -49,45 +51,69 @@ namespace BackEnd.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProductInfo(Guid id)
+        public async Task<ActionResult<ReadProductDto>> GetProduct(Guid id)
         {
             var product = await _context.products.FirstOrDefaultAsync(x => x.Id == id);
             if (product == null)
                 return BadRequest("Product not found.");
-            return Ok(product);
+
+            var response = _mapper.Map<ReadProductDto>(product);
+            return Ok(response);
+        }
+
+        [HttpGet("/api/Product/Search")]
+        public async Task<ActionResult<ReadProductDto>> SearchProduct(int page,string keywork)
+        {
+            var pageResults = 3f;
+            var pageCount = Math.Ceiling(_context.products.Where(x => x.name.Contains(keywork)).Count() / pageResults);
+
+            var product = await _context.products
+                .Where(x => x.stopped == true)
+                .Where(x => x.name.Contains(keywork))
+                .Skip((page - 1) * (int)pageResults)
+                .Take((int)pageResults)
+                .ToListAsync();
+
+            var productDtoResponse = _mapper.Map<List<ReadProductDto>>(product);
+
+            var response = new ProductResponseDto
+            {
+                Products = productDtoResponse,
+                CurrentPages = page,
+                Pages = (int)pageCount
+            };
+
+            return Ok(response);
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Product>>> AddProduct(Product product)
+        public async Task<ActionResult<List<CreateProductDto>>> AddProduct(CreateProductDto newProduct)
         {
+            Ensure.Any.IsNotNull(newProduct, nameof(newProduct));
+            var product = _mapper.Map<Product>(newProduct);
+
             _context.products.Add(product);
             await _context.SaveChangesAsync();
 
-            return Ok(await _context.products.ToListAsync());
+            return Ok(product);
         }
 
         [HttpPut]
-        public async Task<ActionResult<Product>> UpdateProduct(Product UpdataProduct)
+        public async Task<ActionResult<UpdateProductDto>> UpdateProduct(UpdateProductDto UpdataProduct)
         {
-            var product = await _context.products.FindAsync(UpdataProduct.Id);
-            if (product == null)
-                return BadRequest("Product not found.");
-
-            product.name = UpdataProduct.name;
-            product.description = UpdataProduct.description;
-            product.cost = UpdataProduct.cost;
-            product.inventory = UpdataProduct.inventory;
-            product.stopped = UpdataProduct.stopped;
-
+            Ensure.Any.IsNotNull(UpdataProduct, nameof(UpdataProduct));
+            var product = _mapper.Map<Product>(UpdataProduct);
+            
+            _context.products.Update(product);
             await _context.SaveChangesAsync();
 
             return Ok(await _context.products.ToListAsync());
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Product>> DeleteProduct(Guid id)
+        public async Task<ActionResult> DeleteProduct(Guid id)
         {
-            var product = await _context.products.FindAsync(id);
+            var product = await _context.products.FirstOrDefaultAsync(x => x.Id == id);
             if (product == null)
                 return BadRequest("Product not found.");
 

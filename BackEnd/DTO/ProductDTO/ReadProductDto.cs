@@ -6,10 +6,10 @@ namespace BackEnd.DTO.ProductDTO
 {
     public class ReadProductDto
     {
-        [StringLength(50)]
+        public Guid Id { get; set; }
+
         public string name { get; set; }
 
-        [Column(TypeName = "ntext")]
         public string description { get; set; }
 
         public int cost { get; set; }
@@ -17,7 +17,5 @@ namespace BackEnd.DTO.ProductDTO
         public int inventory { get; set; }
 
         public Guid ? CategoryId { get; set; }
-
-        public CategoryDto ? Categories { get; set; }
     }
 }

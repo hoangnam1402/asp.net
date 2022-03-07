@@ -9,11 +9,11 @@ namespace BackEnd.Profiles
         public AllProfile()
         {
             CreateMap<CreateProductDto, BackEnd.Model.Product>();
-            CreateMap<ListProductDto, BackEnd.Model.Product>();
-            CreateMap<ReadProductDto, BackEnd.Model.Product>();
+            CreateMap<BackEnd.Model.Product, ReadProductDto>();
             CreateMap<UpdateProductDto, BackEnd.Model.Product>();
 
-            CreateMap<CategoryDto, BackEnd.Model.Category>();
+            CreateMap<CreateCategoryDto, BackEnd.Model.Category>();
+            CreateMap<BackEnd.Model.Category, ReadCategoryDto>();
         }
     }
 }

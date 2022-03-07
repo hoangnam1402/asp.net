@@ -3,11 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BackEnd.DTO.CategoryDTO
 {
-    public class CategoryDto
+    public class ReadCategoryDto
     {
-        [Column(TypeName = "ntext")]
+        public Guid CategoryId { get; set; }
+
+        public string CategoryName { get; set; }
+
         public string? Content { set; get; }
 
-        public List<CreateProductDto>? Products { get; set; }
     }
 }
