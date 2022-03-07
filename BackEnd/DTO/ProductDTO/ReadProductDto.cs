@@ -1,13 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BackEnd.Model
+namespace BackEnd.DTO.ProductDTO
 {
-    public class Product
+    public class ReadProductDto
     {
-        [Key]
-        public Guid Id { get; set; }
-
         [StringLength(50)]
         public string name { get; set; }
 
@@ -18,10 +15,8 @@ namespace BackEnd.Model
 
         public int inventory { get; set; }
 
-        public bool stopped { get; set; }
+        public Guid ? CategoryId { get; set; }
 
-        public Guid ? CategoryId { get; set; } 
-
-        public Category ? Category { get; set; }
+        public CategoryDto ? Categories { get; set; }
     }
 }
