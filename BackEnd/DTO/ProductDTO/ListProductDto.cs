@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BackEnd.DTO.CategoryDTO;
+using System.ComponentModel.DataAnnotations;
 
 namespace BackEnd.DTO.ProductDTO
 {
