@@ -47,7 +47,9 @@
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__left">
-                                    <p>Showing 1–3 of 126 results</p>
+                                    <p class="my-3"> Showing @(Model.currentPage*3-2) - 
+                                        @(Model.currentPage*3 < Model.productNumber ? Model.currentPage*3 : Model.productNumber ) 
+                                        of @(Model.productNumber) results</p>
                                 </div>
                             </div>
                         </div>
@@ -59,7 +61,7 @@
                         .Take((int)Model.pageSize))
                         {
                         <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
+                            <div class="products">
                                 <div class="product__item__pic set-bg" data-setbg="img/product/product-2.jpg"></div>
                                 <div class="product__item__text">
                                     <h6>@x.name</h6>
@@ -74,7 +76,7 @@
                             <ul class="product__pagination">
                             @for(var i = 1; i <= Model.pageCount; i++)
                             {
-                                <li class="page-item @(i == Model.currentPage ? "active" : "")">
+                                <li class="page-item @(i == Model.currentPage ? "active" : "")" style="float:left">
                                     <a asp-page="/Product" asp-route-currentpage="@i" class="page-link">@i</a>
                                 </li>
                             }

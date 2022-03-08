@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using BackEnd.Controllers;
 using ClassLibrary;
-using BackEnd.DTO.ProductDTO;
 using BackEnd.Model;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Linq;
 
 namespace Customer.Pages
 {
@@ -24,7 +24,13 @@ namespace Customer.Pages
         public void OnGet()
         {
             products = productClass.GetProduct();
-            pageCount = (int)Math.Ceiling(products.Where(x => x.stopped == true).Count() / pageSize);
+            productNumber = products.Where(x => x.stopped == true).Count();
+            pageCount = (int)Math.Ceiling(productNumber / pageSize);
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                products = (List<Product>)products.Where(x => x.name.Contains(searchString));
+            }
         }
 
         [BindProperty(SupportsGet = true)]
@@ -34,5 +40,15 @@ namespace Customer.Pages
 
         [BindProperty]
         public int pageCount { get; set; }
+
+        public int productNumber { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string searchString { get; set; }
+
+        public SelectList categoryName { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string chooseCategory { get; set; }
     }
 }
