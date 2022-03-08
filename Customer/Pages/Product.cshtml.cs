@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using BackEnd.Controllers;
 using ClassLibrary;
+using BackEnd.DTO.ProductDTO;
 using BackEnd.Model;
 
 namespace Customer.Pages
@@ -23,6 +24,15 @@ namespace Customer.Pages
         public void OnGet()
         {
             products = productClass.GetProduct();
+            pageCount = (int)Math.Ceiling(products.Where(x => x.stopped == true).Count() / pageSize);
         }
+
+        [BindProperty(SupportsGet = true)]
+        public int currentPage { get; set; } = 1;
+
+        public float pageSize { get; set; } = 3;
+
+        [BindProperty]
+        public int pageCount { get; set; }
     }
 }

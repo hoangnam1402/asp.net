@@ -4,23 +4,85 @@
     ViewData["Title"] = "Product";
 }
 
-@foreach(var x in Model.products)
-{
-    <div class="container">
-        <div class="ProductList">
-            <div class="card">
-                <div class="imgBox">
-                    <img />
-                </div>
-                <div class="content">
-                    <div class="productName">
-                        <h3>@x.name</h3>
+    <!-- Shop Section Begin -->
+    <section class="shop spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="shop__sidebar">
+                        <div class="shop__sidebar__search">
+                            <form action="#">
+                                <input type="text" placeholder="Search...">
+                                <button type="submit"><span class="icon_search"></span></button>
+                            </form>
+                        </div>
+                        <div class="shop__sidebar__accordion">
+                            <div class="accordion" id="accordionExample">
+                                <div class="card">
+                                    <div class="card-heading">
+                                        <a data-toggle="collapse" data-target="#collapseOne">Categories</a>
+                                    </div>
+                                    <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="shop__sidebar__categories">
+                                                <ul class="nice-scroll">
+                                                    <li><a href="#">Men (20)</a></li>
+                                                    <li><a href="#">Women (20)</a></li>
+                                                    <li><a href="#">Bags (20)</a></li>
+                                                    <li><a href="#">Clothing (20)</a></li>
+                                                    <li><a href="#">Shoes (20)</a></li>
+                                                    <li><a href="#">Accessories (20)</a></li>
+                                                    <li><a href="#">Kids (20)</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="price_rating">
-                        <h2>@x.cost</h2>
+                </div>
+                <div class="col-lg-9">
+                    <div class="shop__product__option">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="shop__product__option__left">
+                                    <p>Showing 1–3 of 126 results</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        @foreach(var x in Model.products
+                        .Where(x => x.stopped == true)
+                        .Skip(((int)Model.currentPage - 1) * (int)Model.pageSize)
+                        .Take((int)Model.pageSize))
+                        {
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg" data-setbg="img/product/product-2.jpg"></div>
+                                <div class="product__item__text">
+                                    <h6>@x.name</h6>
+                                    <h5>@x.cost</h5>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ul class="product__pagination">
+                            @for(var i = 1; i <= Model.pageCount; i++)
+                            {
+                                <li class="page-item @(i == Model.currentPage ? "active" : "")">
+                                    <a asp-page="/Product" asp-route-currentpage="@i" class="page-link">@i</a>
+                                </li>
+                            }
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-}
+    </section>
+    <!-- Shop Section End -->

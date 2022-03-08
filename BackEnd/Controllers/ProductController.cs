@@ -33,7 +33,7 @@ namespace BackEnd.Controllers
             var pageCount = Math.Ceiling(_context.products.Count() / pageResults);
 
             var product = await _context.products
-                .Where(x => x.stopped == true)
+                .Where(x => x.stopped == false)
                 .Skip((page - 1) * (int)pageResults)
                 .Take((int)pageResults)
                 .ToListAsync();
