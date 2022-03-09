@@ -30,16 +30,16 @@ namespace Customer.Pages
         {
             products = productClass.GetProduct();
             categories = categoryClass.GetCategories();
-            if (!string.IsNullOrEmpty(searchString))
+            if(category != null)
+            {
+                products = products.Where(x => x.CategoryId.ToString() == category).ToList();
+            }
+            if(!string.IsNullOrEmpty(searchString))
             {
                 products = products.Where(x => x.name.Contains(searchString)).ToList();
             }
             productNumber = products.Where(x => x.stopped == true).Count();
             pageCount = (int)Math.Ceiling(productNumber / pageSize);
-            if (!string.IsNullOrEmpty(category))
-            {
-                products = products.Where(x => x.CategoryId.ToString().Contains(category)).ToList();
-            }
         }
 
         [BindProperty(SupportsGet = true)]
@@ -56,6 +56,6 @@ namespace Customer.Pages
         public string searchString { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public string category { get; set; }
+        public string category { get; set; } 
     }
 }

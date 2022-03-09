@@ -25,10 +25,12 @@
                                     <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__categories">
-                                                <ul class="nice-scroll  filter__controls">
+                                                <ul class="nice-scroll">
                                                     @foreach(var x in Model.categories)
                                                     {
-                                                        <li class="active" data-filter=".@x.CategoryId">@x.CategoryName</li>
+                                                        <li class="page-item @(x.CategoryId.ToString() == Model.category ? "active" : "")">
+                                                            <a asp-page="/Product" asp-route-category="@x.CategoryId" class="page-link">@x.CategoryName</a>
+                                                        </li>
                                                     }
                                                 </ul>
                                             </div>
