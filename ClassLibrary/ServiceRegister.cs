@@ -9,6 +9,7 @@ namespace ClassLibrary
     {
         public static void AddDataAccessorLayer(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddTransient<ICategoryClass, ClassCategory>();
             services.AddTransient<IProductClass, ClassProduct>();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DbConnection"), b =>

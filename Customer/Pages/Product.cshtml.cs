@@ -11,25 +11,34 @@ namespace Customer.Pages
     {
         private readonly ILogger<PrivacyModel> _logger;
         private readonly IProductClass productClass;
+        private readonly ICategoryClass categoryClass;
 
-        public PrivacyModel(ILogger<PrivacyModel> logger, IProductClass productClass)
+        public PrivacyModel(ILogger<PrivacyModel> logger, IProductClass productClass, ICategoryClass categoryClass)
         {
             _logger = logger;
             this.productClass = productClass;
+            this.categoryClass = categoryClass;
         }
 
         [BindProperty]
         public List<Product> products { get; set; }
 
+        [BindProperty]
+        public List<Category> categories { get; set; }
+
         public void OnGet()
         {
             products = productClass.GetProduct();
-            productNumber = products.Where(x => x.stopped == true).Count();
-            pageCount = (int)Math.Ceiling(productNumber / pageSize);
-
+            categories = categoryClass.GetCategories();
             if (!string.IsNullOrEmpty(searchString))
             {
-                products = (List<Product>)products.Where(x => x.name.Contains(searchString));
+                products = products.Where(x => x.name.Contains(searchString)).ToList();
+            }
+            productNumber = products.Where(x => x.stopped == true).Count();
+            pageCount = (int)Math.Ceiling(productNumber / pageSize);
+            if (!string.IsNullOrEmpty(category))
+            {
+                products = products.Where(x => x.CategoryId.ToString().Contains(category)).ToList();
             }
         }
 
@@ -46,9 +55,7 @@ namespace Customer.Pages
         [BindProperty(SupportsGet = true)]
         public string searchString { get; set; }
 
-        public SelectList categoryName { get; set; }
-
         [BindProperty(SupportsGet = true)]
-        public string chooseCategory { get; set; }
+        public string category { get; set; }
     }
 }

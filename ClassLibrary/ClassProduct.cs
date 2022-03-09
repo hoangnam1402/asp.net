@@ -12,7 +12,7 @@ namespace ClassLibrary
         public List<Product> products;
         private readonly ApplicationDbContext dbContext;
 
-        public List<Product> GetProduct ()
+        public List<Product> GetProduct()
         {
             products = dbContext.products.ToList();
 
