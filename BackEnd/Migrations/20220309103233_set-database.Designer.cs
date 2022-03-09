@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackEnd.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220307110442_set-database")]
+    [Migration("20220309103233_set-database")]
     partial class setdatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -85,6 +85,10 @@ namespace BackEnd.Migrations
                         .IsRequired()
                         .HasColumnType("ntext");
 
+                    b.Property<string>("img")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("inventory")
                         .HasColumnType("int");
 
@@ -92,6 +96,9 @@ namespace BackEnd.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("rating")
+                        .HasColumnType("int");
 
                     b.Property<bool>("stopped")
                         .HasColumnType("bit");
@@ -103,18 +110,43 @@ namespace BackEnd.Migrations
                     b.ToTable("products");
                 });
 
+            modelBuilder.Entity("CustomerProduct", b =>
+                {
+                    b.Property<Guid>("CustomersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CustomersId", "ProductsId");
+
+                    b.HasIndex("ProductsId");
+
+                    b.ToTable("CustomerProduct");
+                });
+
             modelBuilder.Entity("BackEnd.Model.Product", b =>
                 {
                     b.HasOne("BackEnd.Model.Category", "Category")
-                        .WithMany("Products")
+                        .WithMany()
                         .HasForeignKey("CategoryId");
 
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("BackEnd.Model.Category", b =>
+            modelBuilder.Entity("CustomerProduct", b =>
                 {
-                    b.Navigation("Products");
+                    b.HasOne("BackEnd.Model.Customer", null)
+                        .WithMany()
+                        .HasForeignKey("CustomersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BackEnd.Model.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

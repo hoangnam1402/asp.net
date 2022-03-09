@@ -17,5 +17,9 @@ namespace BackEnd.DTO.ProductDTO
         public int inventory { get; set; }
 
         public Guid ? CategoryId { get; set; }
+
+        public int ? rating { get; set; }
+
+        public string img { get; set; }
     }
 }

@@ -22,5 +22,8 @@ namespace BackEnd.DTO.ProductDTO
 
         public Guid? CategoryId { get; set; }
 
+        public int ? rating { get; set; }
+
+        public string img { get; set; }
     }
 }

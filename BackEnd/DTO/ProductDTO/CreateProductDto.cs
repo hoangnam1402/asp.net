@@ -19,5 +19,7 @@ namespace BackEnd.DTO.ProductDTO
         public bool stopped { get; set; }
 
         public Guid? CategoryId { get; set; }
+
+        public string img { get; set; }
     }
 }

@@ -16,5 +16,7 @@ namespace BackEnd.Model
         public string PhoneNumer { get; set; }
 
         public DateTime SignDay { get; set; } = DateTime.Now;
+
+        public virtual ICollection<Product> ? Products { get; set; }
     }
 }

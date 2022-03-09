@@ -23,5 +23,11 @@ namespace BackEnd.Model
         public Guid ? CategoryId { get; set; } 
 
         public Category ? Category { get; set; }
+
+        public int ? rating { get; set; }
+
+        public string img { get; set; }
+
+        public virtual ICollection<Customer>? Customers { get; set; }
     }
 }

@@ -12,7 +12,5 @@ namespace BackEnd.Model
 
         [Column(TypeName = "ntext")]
         public string ? Content { set; get; }
-
-        public List<Product> ? Products { get; set; }
     }
 }
