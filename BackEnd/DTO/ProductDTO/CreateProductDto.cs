@@ -21,5 +21,7 @@ namespace BackEnd.DTO.ProductDTO
         public Guid? CategoryId { get; set; }
 
         public string img { get; set; }
+
+        public DateTime CreateDay { get; set; }
     }
 }

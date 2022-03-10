@@ -25,5 +25,7 @@ namespace BackEnd.DTO.ProductDTO
         public int ? rating { get; set; }
 
         public string img { get; set; }
+
+        public DateTime UpdateDay { get; set; }
     }
 }
