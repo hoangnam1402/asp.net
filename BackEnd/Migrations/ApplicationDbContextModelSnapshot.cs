@@ -114,21 +114,6 @@ namespace BackEnd.Migrations
                     b.ToTable("products");
                 });
 
-            modelBuilder.Entity("CustomerProduct", b =>
-                {
-                    b.Property<Guid>("CustomersId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProductsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("CustomersId", "ProductsId");
-
-                    b.HasIndex("ProductsId");
-
-                    b.ToTable("CustomerProduct");
-                });
-
             modelBuilder.Entity("BackEnd.Model.Product", b =>
                 {
                     b.HasOne("BackEnd.Model.Category", "Category")
@@ -136,21 +121,6 @@ namespace BackEnd.Migrations
                         .HasForeignKey("CategoryId");
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("CustomerProduct", b =>
-                {
-                    b.HasOne("BackEnd.Model.Customer", null)
-                        .WithMany()
-                        .HasForeignKey("CustomersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BackEnd.Model.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

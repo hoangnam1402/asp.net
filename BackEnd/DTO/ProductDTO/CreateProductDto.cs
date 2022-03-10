@@ -16,12 +16,12 @@ namespace BackEnd.DTO.ProductDTO
 
         public int inventory { get; set; }
 
-        public bool stopped { get; set; }
+        public bool stopped { get; set; } = false;
 
         public Guid? CategoryId { get; set; }
 
         public string img { get; set; }
 
-        public DateTime CreateDay { get; set; }
+        public DateTime CreateDay { get; set; } = DateTime.Now;
     }
 }

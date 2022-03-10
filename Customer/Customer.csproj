@@ -7,28 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\images\.DS_Store" />
-    <None Include="wwwroot\images\about.png" />
-    <None Include="wwwroot\images\background_co.jpg" />
-    <None Include="wwwroot\images\banner2.jpg" />
-    <None Include="wwwroot\images\frout.png" />
-    <None Include="wwwroot\images\gallery1.png" />
-    <None Include="wwwroot\images\gallery2.png" />
-    <None Include="wwwroot\images\gallery3.png" />
-    <None Include="wwwroot\images\gallery4.png" />
-    <None Include="wwwroot\images\gallery5.png" />
-    <None Include="wwwroot\images\gallery6.png" />
-    <None Include="wwwroot\images\loading.gif" />
-    <None Include="wwwroot\images\logo.png" />
-    <None Include="wwwroot\images\lo_be---Copy.png" />
-    <None Include="wwwroot\images\lo_be-Copy.png" />
-    <None Include="wwwroot\images\lo_be.png" />
-    <None Include="wwwroot\images\lo_be1.png" />
-    <None Include="wwwroot\images\menu_icon.png" />
-    <None Include="wwwroot\images\pro1.png" />
-    <None Include="wwwroot\images\pro2.png" />
-    <None Include="wwwroot\images\pro3.png" />
-    <None Include="wwwroot\images\pro4.png" />
+    <Compile Remove="wwwroot\images\**" />
+    <Content Remove="wwwroot\images\**" />
+    <EmbeddedResource Remove="wwwroot\images\**" />
+    <None Remove="wwwroot\images\**" />
   </ItemGroup>
 
   <ItemGroup>

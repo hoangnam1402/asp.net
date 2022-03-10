@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackEnd.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220310082128_add-day-for-product")]
-    partial class adddayforproduct
+    [Migration("20220310091151_set-database")]
+    partial class setdatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -116,21 +116,6 @@ namespace BackEnd.Migrations
                     b.ToTable("products");
                 });
 
-            modelBuilder.Entity("CustomerProduct", b =>
-                {
-                    b.Property<Guid>("CustomersId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProductsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("CustomersId", "ProductsId");
-
-                    b.HasIndex("ProductsId");
-
-                    b.ToTable("CustomerProduct");
-                });
-
             modelBuilder.Entity("BackEnd.Model.Product", b =>
                 {
                     b.HasOne("BackEnd.Model.Category", "Category")
@@ -138,21 +123,6 @@ namespace BackEnd.Migrations
                         .HasForeignKey("CategoryId");
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("CustomerProduct", b =>
-                {
-                    b.HasOne("BackEnd.Model.Customer", null)
-                        .WithMany()
-                        .HasForeignKey("CustomersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BackEnd.Model.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -28,10 +28,8 @@ namespace BackEnd.Model
 
         public string img { get; set; }
 
-        public virtual ICollection<Customer>? Customers { get; set; }
+        public DateTime CreateDay { get; set; }
 
-        public DateTime CreateDay { get; set; } = DateTime.Now;
-
-        public DateTime ? UpdateDay { get; set; } = DateTime.Now;
+        public DateTime ? UpdateDay { get; set; }
     }
 }

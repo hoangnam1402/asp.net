@@ -49,7 +49,9 @@ namespace BackEnd.Migrations
                     stopped = table.Column<bool>(type: "bit", nullable: false),
                     CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     rating = table.Column<int>(type: "int", nullable: true),
-                    img = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    img = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreateDay = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateDay = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -61,35 +63,6 @@ namespace BackEnd.Migrations
                         principalColumn: "CategoryId");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "CustomerProduct",
-                columns: table => new
-                {
-                    CustomersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProductsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CustomerProduct", x => new { x.CustomersId, x.ProductsId });
-                    table.ForeignKey(
-                        name: "FK_CustomerProduct_customers_CustomersId",
-                        column: x => x.CustomersId,
-                        principalTable: "customers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CustomerProduct_products_ProductsId",
-                        column: x => x.ProductsId,
-                        principalTable: "products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CustomerProduct_ProductsId",
-                table: "CustomerProduct",
-                column: "ProductsId");
-
             migrationBuilder.CreateIndex(
                 name: "IX_products_CategoryId",
                 table: "products",
@@ -98,9 +71,6 @@ namespace BackEnd.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "CustomerProduct");
-
             migrationBuilder.DropTable(
                 name: "customers");
 
