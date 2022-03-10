@@ -38,7 +38,7 @@ namespace Customer.Pages
             {
                 products = products.Where(x => x.name.Contains(searchString)).ToList();
             }
-            productNumber = products.Where(x => x.stopped == true).Count();
+            productNumber = products.Where(x => x.stopped == false).Count();
             pageCount = (int)Math.Ceiling(productNumber / pageSize);
         }
 

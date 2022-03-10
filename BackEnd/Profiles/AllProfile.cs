@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BackEnd.DTO.ProductDTO;
 using BackEnd.DTO.CategoryDTO;
+using BackEnd.DTO.CustomerDTO;
 
 namespace BackEnd.Profiles
 {
@@ -14,6 +15,10 @@ namespace BackEnd.Profiles
 
             CreateMap<CreateCategoryDto, BackEnd.Model.Category>();
             CreateMap<BackEnd.Model.Category, ReadCategoryDto>();
+
+            CreateMap<CreateCustomerDto, BackEnd.Model.Customer>();
+            CreateMap<BackEnd.Model.Customer, ReadCustomerDto>();
+            CreateMap<UpdateCustomerDto, BackEnd.Model.Customer>();
         }
     }
 }

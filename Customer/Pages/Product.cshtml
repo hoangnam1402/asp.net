@@ -55,7 +55,7 @@
                     </div>
                     <div class="row product__filter">
                         @foreach(var x in Model.products
-                        .Where(x => x.stopped == true)
+                        .Where(x => x.stopped == false)
                         .Skip(((int)Model.currentPage - 1) * (int)Model.pageSize)
                         .Take((int)Model.pageSize))
                         {
@@ -66,11 +66,22 @@
                                     <h6>@x.name</h6>
                                     <a href="#" class="add-cart">+ Add To Cart</a>
                                     <div class="rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
+                                        @if (x.rating.HasValue)
+                                        {
+                                            for (var i = 1; i <= 5; i++)
+                                            {
+                                                if (i <= x.rating)
+                                                {
+                                                    <i class="fa fa-star"></i>
+                                                }else
+                                                {
+                                                    <i class="fa fa-star-o"></i>
+                                                }
+                                            }
+                                        }else
+                                        {
+                                            <p style="color:red">New</p>
+                                        }
                                     </div>
                                     <h5>@x.cost Đ</h5>
                                 </div>
@@ -80,14 +91,12 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
-                            <ul class="product__pagination">
+                            <div class="product__pagination">
                             @for(var i = 1; i <= Model.pageCount; i++)
                             {
-                                <li class="page-item @(i == Model.currentPage ? "active" : "")" style="float:left">
-                                    <a asp-page="/Product" asp-route-currentpage="@i" class="page-link">@i</a>
-                                </li>
+                                <a asp-page="/Product" asp-route-currentpage="@i" class=@(i == Model.currentPage ? "active" : "")>@i</a>
                             }
-                            </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
