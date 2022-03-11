@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using BackEnd.Data;
+﻿using BackEnd.Data;
 using BackEnd.DTO.CategoryDTO;
 using BackEnd.DTO.ProductDTO;
 using BackEnd.Model;
@@ -11,22 +10,19 @@ namespace ClassLibrary
     public class ClassCategory : ICategoryClass
     {
         private readonly ApplicationDbContext _context;
-        private readonly IMapper _mapper;
 
-        public ClassCategory(ApplicationDbContext context, IMapper mapper)
+        public ClassCategory(ApplicationDbContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
-        public async Task<List<ReadCategoryDto>> GetCategories()
+        public List<Category> GetCategories()
         {
-            var category = await _context.categories.ToListAsync();
+            var category = _context.categories.ToList();
             if (category == null)
                 return null;
 
-            var response = _mapper.Map<List<ReadCategoryDto>>(category);
-            return response;
+            return category;
         }
     }
 }

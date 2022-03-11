@@ -60,7 +60,9 @@
                         {
                         <div class="col-lg-4 col-md-6 col-sm-6 mix @x.CategoryId">
                             <div class="product__item sale">
-                                <div class="product__item__pic set-bg" data-setbg="img/product/product-3.jpg"></div>
+                                <div class="product__item__pic set-bg" data-setbg="img/product/product-3.jpg">
+@*                                    <a asp-area="" style="height:100%" asp-route-id="@x.Id" asp-page="/ProductDetail" />
+*@                                </div>
                                 <div class="product__item__text">
                                     <h6>@x.name</h6>
                                     <a asp-area="" asp-route-id="@x.Id" asp-page="/ProductDetail" class="add-cart"> More detail </a>

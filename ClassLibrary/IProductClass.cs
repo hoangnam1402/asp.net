@@ -11,8 +11,8 @@ namespace ClassLibrary
 {
     public interface IProductClass
     {
-        Task<List<ReadProductDto>> GetProduct();
+        public List<Product> GetProduct();
 
-        Task<ReadProductDto> GetProductDetail(Guid id);
+        public Product GetProductDetail(Guid id);
     }
 }

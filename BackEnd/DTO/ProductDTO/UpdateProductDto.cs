@@ -26,6 +26,6 @@ namespace BackEnd.DTO.ProductDTO
 
         public string img { get; set; }
 
-        public DateTime UpdateDay { get; set; } = DateTime.Now;
+        public DateTime UpdateDay { get; set; }
     }
 }

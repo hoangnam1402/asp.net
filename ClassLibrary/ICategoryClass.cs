@@ -12,6 +12,6 @@ namespace ClassLibrary
 {
     public interface ICategoryClass
     {
-        Task<List<ReadCategoryDto>> GetCategories();
+        public List<Category> GetCategories();
     }
 }

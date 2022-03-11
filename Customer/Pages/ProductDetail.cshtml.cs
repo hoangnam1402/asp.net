@@ -20,24 +20,24 @@ namespace Customer.Pages
         }
 
         [BindProperty]
-        public List<ReadProductDto> products { get; set; }
+        public List<Product> products { get; set; }
 
-        public ReadProductDto productDetail { get; set; }
+        public Product productDetail { get; set; }
 
         public List<ProductCartDto> Cart { get; set; }
 
-        public async void OnGet(Guid id)
+        public void OnGet(Guid id)
         {
-            products = await productClass.GetProduct();
+            products = productClass.GetProduct();
             productDetail = products.FirstOrDefault(x => x.Id == id);
         }
 
         public int ProductQty { get; set; } = 1;
 
-        public async Task<ActionResult> OnPostBuyNow(Guid id, int ProductQty)
+        public ActionResult OnPostBuyNow(Guid id, int ProductQty)
         {
 
-            products = await productClass.GetProduct();
+            products = productClass.GetProduct();
             productDetail = products.FirstOrDefault(x => x.Id == id);
 
             if (productDetail != null)

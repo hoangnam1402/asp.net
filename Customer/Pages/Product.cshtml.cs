@@ -22,15 +22,15 @@ namespace Customer.Pages
             this.categoryClass = categoryClass;
         }
 
-        public List<ReadProductDto> products { get; set; }
+        public List<Product> products { get; set; }
 
         [BindProperty]
-        public List<ReadCategoryDto> categories { get; set; }
+        public List<Category> categories { get; set; }
 
-        public async void OnGet()
+        public void OnGet()
         {
-            products = await productClass.GetProduct();
-            categories = await categoryClass.GetCategories();
+            products = productClass.GetProduct();
+            categories = categoryClass.GetCategories();
             if(category != null)
             {
                 products = products.Where(x => x.CategoryId.ToString() == category).ToList();

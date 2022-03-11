@@ -11,8 +11,8 @@ namespace ClassLibrary
 {
     public interface ICustomerClass
     {
-        Task<IdentityResult> Register(CreateCustomerDto request, string role);
+        //Task<IdentityResult> Register(CreateCustomerDto request, string role);
 
-        Task<ReadCustomerDto> GetById(string id);
+        //Task<ReadCustomerDto> GetById(string id);
     }
 }
