@@ -62,7 +62,7 @@ namespace BackEnd.Controllers
         }
 
         [HttpGet("/api/Product/Search")]
-        public async Task<ActionResult<ReadProductDto>> SearchProduct(int page,string keywork)
+        public async Task<ActionResult<List<ReadProductDto>>> SearchProduct(int page,string keywork)
         {
             var pageResults = 3f;
             var pageCount = Math.Ceiling(_context.products.Where(x => x.name.Contains(keywork)).Count() / pageResults);

@@ -6,7 +6,7 @@
 
         public string Address { get; set; }
 
-        public string PhoneNumer { get; set; }
+        public string PhoneNumber { get; set; }
 
         public DateTime SignDay { get; set; }
     }

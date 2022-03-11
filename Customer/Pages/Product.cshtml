@@ -55,7 +55,6 @@
                     </div>
                     <div class="row">
                         @foreach(var x in Model.products
-                        .Where(x => x.stopped == false)
                         .Skip(((int)Model.currentPage - 1) * (int)Model.pageSize)
                         .Take((int)Model.pageSize))
                         {

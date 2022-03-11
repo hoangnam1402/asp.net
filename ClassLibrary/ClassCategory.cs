@@ -1,22 +1,32 @@
-﻿using BackEnd.Data;
+﻿using AutoMapper;
+using BackEnd.Data;
+using BackEnd.DTO.CategoryDTO;
+using BackEnd.DTO.ProductDTO;
 using BackEnd.Model;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClassLibrary
 {
     public class ClassCategory : ICategoryClass
     {
-        public ClassCategory(ApplicationDbContext dbContext)
+        private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
+
+        public ClassCategory(ApplicationDbContext context, IMapper mapper)
         {
-            this.dbContext = dbContext;
+            _context = context;
+            _mapper = mapper;
         }
-        public List<Category> categories;
-        private readonly ApplicationDbContext dbContext;
 
-        public List<Category> GetCategories()
+        public async Task<List<ReadCategoryDto>> GetCategories()
         {
-            categories = dbContext.categories.ToList();
+            var category = await _context.categories.ToListAsync();
+            if (category == null)
+                return null;
 
-            return categories;
+            var response = _mapper.Map<List<ReadCategoryDto>>(category);
+            return response;
         }
     }
 }

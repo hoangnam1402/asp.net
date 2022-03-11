@@ -16,8 +16,6 @@ namespace BackEnd.Model
 
         public int cost { get; set; }
 
-        public int inventory { get; set; }
-
         public bool stopped { get; set; }
 
         public Guid ? CategoryId { get; set; } 
@@ -31,5 +29,7 @@ namespace BackEnd.Model
         public DateTime CreateDay { get; set; }
 
         public DateTime ? UpdateDay { get; set; }
+
+        public bool IsFeatured { get; set; }
     }
 }

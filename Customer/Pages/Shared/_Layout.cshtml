@@ -1,9 +1,20 @@
-﻿<!DOCTYPE html>
+﻿@using BackEnd.DTO.ProductDTO
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    List<ProductCartDto> Cart = Helper.SessionHelper.GetObjectFromJson<List<ProductCartDto>>(HttpContextAccessor.HttpContext.Session, "cart");
+    int totalItem = 0;
+    if (Cart != null)
+    {
+        totalItem = Cart.Sum(i => i.Quantity);
+    }
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ACB Fruit - @ViewData["Title"] </title>
+    <title>ACB shop - @ViewData["Title"] </title>
 
 @*    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -34,14 +45,29 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a asp-area="" asp-page="/Index"><img src="img/logo.png" alt=""></a>
+                        <a asp-area="" asp-page="/Index"><img src="~/img/logo.png" alt=""></a>
                     </div>
+                </div>
+                <div class="header__top__right">
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-page="/Profile" asp-route-id="@User.Claims.FirstOrDefault(claim => claim.Type == "sub").Value">Hello @User.Claims.FirstOrDefault(claim => claim.Type == "name").Value </a>
+                        <a asp-page="/Auth/Logout"><i class="fa fa-user"></i> Logout</a>
+                    }
+                    else
+                    {
+
+                        <a asp-page="/Auth/Login"><i class="fa fa-user"></i> Login</a>
+                        <a asp-page="/Auth/Register"><i class="fa fa-user"></i> Register</a>
+                    }
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
                             <li><a asp-area="" asp-page="/Index">Home</a></li>
                             <li><a asp-area="" asp-page="/Product">Product</a></li>
+                            <li><a asp-area="" asp-page="/Cart">Cart</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -57,7 +83,7 @@
         </main>
     </div>
 
-        <!-- Footer Section Begin -->
+    <!-- Footer Section Begin -->
     <footer class="footer">
         <div class="container">
             <div class="row">

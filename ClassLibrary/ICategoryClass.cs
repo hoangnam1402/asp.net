@@ -1,4 +1,7 @@
-﻿using BackEnd.Model;
+﻿using BackEnd.DTO.CategoryDTO;
+using BackEnd.DTO.CustomerDTO;
+using BackEnd.Model;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +12,6 @@ namespace ClassLibrary
 {
     public interface ICategoryClass
     {
-        public List<Category> GetCategories();
+        Task<List<ReadCategoryDto>> GetCategories();
     }
 }

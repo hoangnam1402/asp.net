@@ -9,6 +9,7 @@ namespace ClassLibrary
     {
         public static void AddDataAccessorLayer(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddTransient<ICustomerClass, ClassCustomer>();
             services.AddTransient<ICategoryClass, ClassCategory>();
             services.AddTransient<IProductClass, ClassProduct>();
             services.AddDbContext<ApplicationDbContext>(options =>

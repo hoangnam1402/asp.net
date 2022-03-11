@@ -1,7 +1,10 @@
+using BackEnd.DTO.ProductDTO;
 using BackEnd.Model;
 using ClassLibrary;
+using Customer.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Linq;
 
 namespace Customer.Pages
 {
@@ -17,14 +20,71 @@ namespace Customer.Pages
         }
 
         [BindProperty]
-        public List<Product> products { get; set; }
+        public List<ReadProductDto> products { get; set; }
 
-        public List<Product> productDetail { get; set; }
+        public ReadProductDto productDetail { get; set; }
 
-        public void OnGet(Guid id)
+        public List<ProductCartDto> Cart { get; set; }
+
+        public async void OnGet(Guid id)
         {
-            products = productClass.GetProduct();
-            productDetail = products.Where(x => x.Id == id).ToList();
+            products = await productClass.GetProduct();
+            productDetail = products.FirstOrDefault(x => x.Id == id);
+        }
+
+        public int ProductQty { get; set; } = 1;
+
+        public async Task<ActionResult> OnPostBuyNow(Guid id, int ProductQty)
+        {
+
+            products = await productClass.GetProduct();
+            productDetail = products.FirstOrDefault(x => x.Id == id);
+
+            if (productDetail != null)
+            {
+                Cart = SessionHelper.GetObjectFromJson<List<ProductCartDto>>(HttpContext.Session, "cart");
+                if (Cart == null)
+                {
+                    Cart = new List<ProductCartDto>
+                    {
+                        new ProductCartDto
+                        {
+                            Product = productDetail,
+                            Quantity = ProductQty
+                        }
+                    };
+                }
+                else
+                {
+                    int index = Exists(Cart, productDetail.Id);
+                    if (index == -1)
+                    {
+                        Cart.Add(new ProductCartDto
+                        {
+                            Product = productDetail,
+                            Quantity = ProductQty
+                        });
+                    }
+                    else
+                    {
+                        Cart[index].Quantity += ProductQty;
+                    }
+                }
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", Cart);
+                return RedirectToPage($"/ProductDetail");
+            }
+            return NotFound();
+        }
+        private static int Exists(List<ProductCartDto> cart, Guid productId)
+        {
+            for (var i = 0; i < cart.Count; i++)
+            {
+                if (cart[i].Product.Id == productId)
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
     }
 }

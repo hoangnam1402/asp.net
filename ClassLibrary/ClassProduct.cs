@@ -1,22 +1,47 @@
 ﻿using BackEnd.Model;
 using BackEnd.Data;
+using BackEnd.DTO.ProductDTO;
+using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClassLibrary
 {
     public class ClassProduct : IProductClass
     {
-        public ClassProduct(ApplicationDbContext dbContext)
+        private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
+
+        public ClassProduct(ApplicationDbContext context, IMapper mapper)
         {
-            this.dbContext = dbContext;
+            _context = context;
+            _mapper = mapper;
         }
-        public List<Product> products;
-        private readonly ApplicationDbContext dbContext;
 
-        public List<Product> GetProduct()
+        public async Task<List<ReadProductDto>> GetProduct()
         {
-            products = dbContext.products.ToList();
+            var product = await _context.products.Where(x => x.stopped == false).ToListAsync();
 
-            return products;
+            if (product == null)
+            {
+                return null;
+            }
+
+            var response = _mapper.Map<List<ReadProductDto>>(product);
+
+            return response;
+        }
+
+        public async Task<ReadProductDto> GetProductDetail(Guid id)
+        {
+            var product = await _context.products.FirstOrDefaultAsync(x => x.Id == id);
+            if (product == null)
+            {
+                return null;
+            }
+
+            var response = _mapper.Map<ReadProductDto>(product);
+            return response;
         }
     }
 }

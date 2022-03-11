@@ -4,6 +4,8 @@ using ClassLibrary;
 using BackEnd.Model;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
+using BackEnd.DTO.ProductDTO;
+using BackEnd.DTO.CategoryDTO;
 
 namespace Customer.Pages
 {
@@ -20,16 +22,15 @@ namespace Customer.Pages
             this.categoryClass = categoryClass;
         }
 
-        [BindProperty]
-        public List<Product> products { get; set; }
+        public List<ReadProductDto> products { get; set; }
 
         [BindProperty]
-        public List<Category> categories { get; set; }
+        public List<ReadCategoryDto> categories { get; set; }
 
-        public void OnGet()
+        public async void OnGet()
         {
-            products = productClass.GetProduct();
-            categories = categoryClass.GetCategories();
+            products = await productClass.GetProduct();
+            categories = await categoryClass.GetCategories();
             if(category != null)
             {
                 products = products.Where(x => x.CategoryId.ToString() == category).ToList();
@@ -38,7 +39,7 @@ namespace Customer.Pages
             {
                 products = products.Where(x => x.name.Contains(searchString)).ToList();
             }
-            productNumber = products.Where(x => x.stopped == false).Count();
+            productNumber = products.Count();
             pageCount = (int)Math.Ceiling(productNumber / pageSize);
         }
 
@@ -56,6 +57,7 @@ namespace Customer.Pages
         public string searchString { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public string category { get; set; } 
+        public string category { get; set; }
+
     }
 }

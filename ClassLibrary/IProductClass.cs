@@ -1,5 +1,6 @@
 ﻿using BackEnd.DTO.ProductDTO;
 using BackEnd.Model;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace ClassLibrary
 {
     public interface IProductClass
     {
-        public List<Product> GetProduct();
+        Task<List<ReadProductDto>> GetProduct();
+
+        Task<ReadProductDto> GetProductDetail(Guid id);
     }
 }
