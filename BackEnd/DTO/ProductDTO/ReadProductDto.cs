@@ -4,22 +4,28 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BackEnd.DTO.ProductDTO
 {
-    public class ReadProductDto
+    public class ReadProductDto : BaseDTO
     {
-        public Guid Id { get; set; }
-
-        public string name { get; set; }
+        public string Name { get; set; }
 
         public string description { get; set; }
 
         public int cost { get; set; }
 
-        public int inventory { get; set; }
+        public int Quantity { get; set; }
+
+        public bool stopped { get; set; }
 
         public Guid ? CategoryId { get; set; }
 
-        public int ? rating { get; set; }
+        public string Pic1 { get; set; }
 
-        public string img { get; set; }
+        public string Pic2 { get; set; }
+
+        public string Pic3 { get; set; }
+
+        public string Pic4 { get; set; }
+
+        public bool IsPublished { get; set; }
     }
 }

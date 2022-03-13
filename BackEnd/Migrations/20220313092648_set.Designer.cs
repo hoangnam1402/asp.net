@@ -4,6 +4,7 @@ using BackEnd.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackEnd.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220313092648_set")]
+    partial class set
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -206,26 +208,6 @@ namespace BackEnd.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Pic1")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("Pic2")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("Pic3")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("Pic4")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -250,6 +232,34 @@ namespace BackEnd.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("products");
+                });
+
+            modelBuilder.Entity("BackEnd.Model.ProductPictures", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PictureUrl")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("product_id");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductPictures");
                 });
 
             modelBuilder.Entity("BackEnd.Model.ProductRating", b =>
@@ -314,6 +324,17 @@ namespace BackEnd.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("BackEnd.Model.ProductPictures", b =>
+                {
+                    b.HasOne("BackEnd.Model.Product", "Product")
+                        .WithMany("ProductPictures")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("BackEnd.Model.ProductRating", b =>
                 {
                     b.HasOne("BackEnd.Model.OrderItem", "OrderItem")
@@ -344,6 +365,8 @@ namespace BackEnd.Migrations
             modelBuilder.Entity("BackEnd.Model.Product", b =>
                 {
                     b.Navigation("OrderItems");
+
+                    b.Navigation("ProductPictures");
                 });
 #pragma warning restore 612, 618
         }

@@ -4,6 +4,6 @@
     {
         public string Name { set; get; }
 
-        public string pass { set; get; }
+        public string PassWord { set; get; }
     }
 }

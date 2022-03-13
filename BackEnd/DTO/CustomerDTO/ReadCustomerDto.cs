@@ -1,13 +1,12 @@
 ﻿namespace BackEnd.DTO.CustomerDTO
 {
-    public class ReadCustomerDto
+    public class ReadCustomerDto : BaseDTO
     {
-        public string name { get; set; }
+        public string Name { get; set; }
 
         public string Address { get; set; }
 
         public string PhoneNumber { get; set; }
 
-        public DateTime SignDay { get; set; }
     }
 }

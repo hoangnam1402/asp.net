@@ -3,33 +3,42 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BackEnd.Model
 {
-    public class Product
+    public class Product : BaseEntity
     {
-        [Key]
-        public Guid Id { get; set; }
-
-        [StringLength(50)]
-        public string name { get; set; }
+        [Required]
+        public string Name { get; set; }
 
         [Column(TypeName = "ntext")]
         public string description { get; set; }
 
         public int cost { get; set; }
 
+        public int Quantity { get; set; }
+
         public bool stopped { get; set; }
 
-        public Guid ? CategoryId { get; set; } 
+        [MaxLength(255)]
+        public string Pic1 { get; set; }
 
-        public Category ? Category { get; set; }
+        [MaxLength(255)]
+        public string Pic2 { get; set; }
 
-        public int ? rating { get; set; }
+        [MaxLength(255)]
+        public string Pic3 { get; set; }
 
-        public string img { get; set; }
+        [MaxLength(255)]
+        public string Pic4 { get; set; }
 
         public DateTime CreateDay { get; set; }
 
         public DateTime ? UpdateDay { get; set; }
 
         public bool IsFeatured { get; set; }
+
+        public Guid? CategoryId { get; set; }
+
+        public Category? Category { get; set; }
+
+        public List<OrderItem> OrderItems { get; set; }
     }
 }

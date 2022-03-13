@@ -3,14 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BackEnd.Model
 {
-    public class Category
+    public class Category : BaseEntity
     {
-        [Key]
-        public Guid CategoryId { set; get; }
-
         public string CategoryName { set; get; }
 
-        [Column(TypeName = "ntext")]
+        [StringLength(maximumLength: 100)]
         public string ? Content { set; get; }
+
+        public List<Product> Products { get; set; }
     }
 }

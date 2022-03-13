@@ -47,7 +47,7 @@ namespace BackEnd.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCategory(Guid id)
         {
-            var category = await _context.categories.FirstOrDefaultAsync(x => x.CategoryId == id);
+            var category = await _context.categories.FirstOrDefaultAsync(x => x.Id == id);
             if (category == null)
                 return BadRequest("Category not found.");
 

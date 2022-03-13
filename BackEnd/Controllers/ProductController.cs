@@ -33,7 +33,6 @@ namespace BackEnd.Controllers
             var pageCount = Math.Ceiling(_context.products.Count() / pageResults);
 
             var product = await _context.products
-                .Where(x => x.stopped == false)
                 .Skip((page - 1) * (int)pageResults)
                 .Take((int)pageResults)
                 .ToListAsync();
@@ -65,11 +64,11 @@ namespace BackEnd.Controllers
         public async Task<ActionResult<List<ReadProductDto>>> SearchProduct(int page,string keywork)
         {
             var pageResults = 3f;
-            var pageCount = Math.Ceiling(_context.products.Where(x => x.name.Contains(keywork)).Count() / pageResults);
+            var pageCount = Math.Ceiling(_context.products.Where(x => x.Name.Contains(keywork)).Count() / pageResults);
 
             var product = await _context.products
                 .Where(x => x.stopped == true)
-                .Where(x => x.name.Contains(keywork))
+                .Where(x => x.Name.Contains(keywork))
                 .Skip((page - 1) * (int)pageResults)
                 .Take((int)pageResults)
                 .ToListAsync();

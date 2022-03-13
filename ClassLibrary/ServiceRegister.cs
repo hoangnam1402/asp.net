@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace ClassLibrary
 {
@@ -9,6 +10,11 @@ namespace ClassLibrary
     {
         public static void AddDataAccessorLayer(this IServiceCollection services, IConfiguration configuration)
         {
+            //services.AddDataAccessorLayer(configuration);
+            //services.AddIdentityLayer(configuration);
+
+            //services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
             //services.AddTransient<ICustomerClass, ClassCustomer>();
             services.AddTransient<ICategoryClass, ClassCategory>();
             services.AddTransient<IProductClass, ClassProduct>();
@@ -16,7 +22,6 @@ namespace ClassLibrary
                 options.UseSqlServer(configuration.GetConnectionString("DbConnection"), b =>
                     b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
                 ));
-
         }
     }
 }

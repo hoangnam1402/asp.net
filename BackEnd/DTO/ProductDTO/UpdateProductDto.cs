@@ -9,23 +9,29 @@ namespace BackEnd.DTO.ProductDTO
         public Guid Id { get; set; }
 
         [StringLength(50)]
-        public string name { get; set; }
+        public string Name { get; set; }
 
         [Column(TypeName = "ntext")]
         public string description { get; set; }
 
         public int cost { get; set; }
 
-        public int inventory { get; set; }
+        public int Quantity { get; set; }
 
         public bool stopped { get; set; }
 
         public Guid? CategoryId { get; set; }
 
-        public int ? rating { get; set; }
-
-        public string img { get; set; }
+        public bool IsPublished { get; set; }
 
         public DateTime UpdateDay { get; set; }
+
+        public string Pic1 { get; set; }
+
+        public string Pic2 { get; set; }
+
+        public string Pic3 { get; set; }
+
+        public string Pic4 { get; set; }
     }
 }

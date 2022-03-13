@@ -6,18 +6,14 @@ namespace BackEnd.Model
 {
     public class Customer : IdentityUser
     {
-        [Key]
-        public Guid Id { get; set; }
-
-        [StringLength(50)]
-        public string name { get; set; }
-
-        public string Password { get; set; }
+        [Required]
+        [StringLength(100)]
+        public string Name { get; set; }
 
         public string Address { get; set; }
 
+        [Required]
+        [MaxLength(50)]
         public string PhoneNumber { get; set; }
-
-        public DateTime SignDay { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace BackEnd.DTO.CustomerDTO
     {
         [Required(ErrorMessage = "Name is required")]
         [StringLength(50)]
-        public string name { get; set; }
+        public string Name { get; set; }
 
         [Required(ErrorMessage = "Passwork Name is required")]
         public string Password { get; set; }
@@ -21,7 +21,5 @@ namespace BackEnd.DTO.CustomerDTO
 
         [Required(ErrorMessage = "PhoneNumer Name is required")]
         public string PhoneNumber { get; set; }
-
-        public DateTime SignDay { get; set; } = DateTime.Now;
     }
 }
