@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,16 +37,28 @@ builder.Services.AddCors(options =>
                       });
 });
 
-builder.Services.AddIdentity<User, IdentityRole>()
-            .AddEntityFrameworkStores<AspNetIdentityDbContext>()
-            .AddDefaultTokenProviders();
-
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromSeconds(10);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
+var migrationsAssembly = typeof(Program).GetTypeInfo().Assembly.GetName().Name;
+var defaultConnString = "Server=DESKTOP-8I3DA26;Database=dotnet-test;Trusted_Connection=True";
+
+builder.Services.AddDbContext<AspNetIdentityDbContext>(options =>
+{
+
+    options.UseSqlServer(defaultConnString,
+        b => b.MigrationsAssembly(migrationsAssembly));
+    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+}
+            );
+
+builder.Services.AddIdentity<User, IdentityRole>()
+.AddEntityFrameworkStores<AspNetIdentityDbContext>()
+.AddDefaultTokenProviders();
 
 // configure identity server with sqlserver stores, keys, clients and scopes
 builder.Services.AddIdentityServer(options =>
@@ -66,6 +79,8 @@ builder.Services.AddIdentityServer(options =>
     options.ConfigureDbContext = b =>
     b.UseSqlServer(defaultConnString, opt => opt.MigrationsAssembly(migrationsAssembly));
 });
+
+builder.AddDeveloperSigningCredential();
 
 var app = builder.Build();
 
