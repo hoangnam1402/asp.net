@@ -2,8 +2,10 @@
 
 namespace BackEnd.DTO.ProductRatingDTO
 {
-    public class UpdateProductRatingDto : BaseDTO
+    public class UpdateProductRatingDto
     {
+        public Guid Id { get; set; }
+
         [StringLength(3000)]
         public string Comment { get; set; }
         [Range(0, 5)]

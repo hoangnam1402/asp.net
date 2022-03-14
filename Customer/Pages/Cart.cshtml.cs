@@ -40,7 +40,12 @@ namespace Customer.Pages
                 {
                     Cart[i].Quantity = quantities[i];
                 }
-
+                if (Cart != null)
+                    Total = Cart.Sum(i => i.Product.cost * i.Quantity);
+                else
+                {
+                    Total = 0;
+                }
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", Cart);
             }
             return Page();

@@ -11,6 +11,6 @@ namespace BackEnd.Data
 
         public DbSet<Category> categories { get; set; }
 
-        public DbSet<Customer> customers { get; set; }
+        public DbSet<User> users { get; set; }
     }
 }

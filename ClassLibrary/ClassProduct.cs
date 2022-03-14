@@ -17,8 +17,8 @@ namespace ClassLibrary
 
         public List<Product> GetProduct()
         {
-            //var product = _context.products.Where(x => x.stopped == false).ToList();
-            var product = _context.products.ToList();
+            var product = _context.products.Where(x => x.stopped == false).ToList();
+            //var product = _context.products.ToList();
 
             if (product == null)
             {

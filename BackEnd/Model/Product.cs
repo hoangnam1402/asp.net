@@ -29,10 +29,6 @@ namespace BackEnd.Model
         [MaxLength(255)]
         public string Pic4 { get; set; }
 
-        public DateTime CreateDay { get; set; }
-
-        public DateTime ? UpdateDay { get; set; }
-
         public bool IsFeatured { get; set; }
 
         public Guid? CategoryId { get; set; }

@@ -21,8 +21,8 @@ namespace BackEnd.Profiles
             CreateMap<BackEnd.Model.Category, ReadCategoryDto>(memberList: AutoMapper.MemberList.None);
 
             //Customer
-            CreateMap<CreateCustomerDto, BackEnd.Model.Customer>(memberList: AutoMapper.MemberList.None);
-            CreateMap<BackEnd.Model.Customer, ReadCustomerDto>(memberList: AutoMapper.MemberList.None);
+            CreateMap<CreateUserDto, BackEnd.Model.User>(memberList: AutoMapper.MemberList.None);
+            CreateMap<BackEnd.Model.User, ReadUserDto>(memberList: AutoMapper.MemberList.None);
 
             //Order
             CreateMap<CreateOrderDto, BackEnd.Model.Order>(memberList: AutoMapper.MemberList.None);

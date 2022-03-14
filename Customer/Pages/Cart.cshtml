@@ -7,81 +7,83 @@
     <!-- Shopping Cart Section Begin -->
     <section class="shopping-cart spad">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="shopping__cart__table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Product</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (Model.Cart != null)
-                                {
-                                    @foreach (var x in @Model.Cart)
+             <form method="post" asp-page-handler="UpdateCart" asp-page="/Cart">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="shopping__cart__table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Cart != null)
                                     {
-                                        <tr>
-                                            <td class="product__cart__item">
-                                                <div class="product__cart__item__pic">
-                                                    <img src="img/shopping-cart/cart-1.jpg" alt="" style="height: 100px; object-fit: cover>
-                                                </div>
-                                                <div class="product__cart__item__text">
-                                                    <h6>@x.Product.Name</h6>
-                                                    <h5>@x.Product.cost Đ</h5>
-                                                </div>
-                                            </td>
-                                            <td class="quantity__item">
-                                                <div class="quantity">
-                                                    <div class="pro-qty-2">
-                                                        <input type="text" value="1">
+                                        @foreach (var x in @Model.Cart)
+                                        {
+                                            <tr>
+                                                <td class="product__cart__item">
+                                                    <div class="product__cart__item__pic">
+                                                        <img src="img/shopping-cart/cart-1.jpg" alt="" style="height: 100px; object-fit: cover>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td class="cart__price">@(x.Product.cost * x.Quantity) Đ</td>
-                                            <td class="cart__close">
-                                                <a asp-page="/Cart" asp-page-handler="delete" asp-route-productid="@x.Product.Id">
-                                                    <i class="fa fa-close"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                                    <div class="product__cart__item__text">
+                                                        <h6>@x.Product.Name</h6>
+                                                        <h5>@x.Product.cost Đ</h5>
+                                                    </div>
+                                                </td>
+                                                <td class="quantity__item">
+                                                    <div class="quantity">
+                                                        <div class="pro-qty-2">
+                                                            <input type="number" value="@x.Quantity" min="1" name="quantities" asp-for="@x.Quantity">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="cart__price">@(x.Product.cost * x.Quantity) Đ</td>
+                                                <td class="cart__close">
+                                                    <a asp-page="/Cart" asp-page-handler="delete" asp-route-productid="@x.Product.Id">
+                                                        <i class="fa fa-close"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
                                     }
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="continue__btn">
-                                <a asp-area="" asp-page="/Product">Continue Shopping</a>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="continue__btn">
+                                    <a asp-area="" asp-page="/Product">Continue Shopping</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="continue__btn update__btn">
+                                    <button type="submit" class="btn primary-btn cart-btn cart-btn-right">
+                                        <i class="fa-solid fa-eye-dropper"></i>
+                                        Upadate Cart
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="continue__btn update__btn">
-                                <button type="submit" class="btn primary-btn cart-btn cart-btn-right">
-                                    <i class="fa-solid fa-eye-dropper"></i>
-                                    Upadate Cart
-                                </button>
-                            </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="cart__total">
+                            <h6>Cart total</h6>
+                            <ul>
+                                <li>Total <span>@Model.Total Đ</span></li>
+                            </ul>
+                            @if (Model.Cart != null)
+                            {
+                                <a asp-page="/Checkout" class="primary-btn">PROCEED TO CHECKOUT</a>
+                            }
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="cart__total">
-                        <h6>Cart total</h6>
-                        <ul>
-                            <li>Total <span>@Model.Total Đ</span></li>
-                        </ul>
-                        @if (Model.Cart != null)
-                        {
-                            <a asp-page="/Checkout" class="primary-btn">PROCEED TO CHECKOUT</a>
-                        }
-                    </div>
-                </div>
-            </div>
+            </form>
         </div>
     </section>
     <!-- Shopping Cart Section End -->
