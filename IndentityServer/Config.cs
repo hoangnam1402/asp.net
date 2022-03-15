@@ -6,82 +6,56 @@ namespace Indentity
     public class Config
     {
         public static IEnumerable<IdentityResource> IdentityResources =>
-        new List<IdentityResource>
-        {
-            new IdentityResources.OpenId(),
-            new IdentityResources.Profile(),
-             new IdentityResource("roles", new[] { "role" }) //Add this line
-        };
-
-        public static IEnumerable<ApiScope> ApiScopes =>
-            new[] {
-                new ApiScope("api1", "https://localhost:5003")
+            new[]
+            {
+                new IdentityResources.OpenId(),
+                new IdentityResources.Profile(),
+                new IdentityResource
+                {
+                    Name = "role",
+                    UserClaims = new List<string> { "role" }
+                }
             };
 
+        public static IEnumerable<ApiScope> ApiScopes =>
+            new[] { new ApiScope("ShopAPI.read"), new ApiScope("ShopAPI.write"), };
+        public static IEnumerable<ApiResource> ApiResources =>
+            new[]
+            {
+                new ApiResource("ShopAPI")
+                {
+                    Scopes = new List<string> { "ShopAPI.read", "ShopAPI.write" },
+                    ApiSecrets = new List<Secret> { new Secret("ScopeSecret".Sha256()) },
+                    UserClaims = new List<string> { "role" }
+                }
+            };
 
         public static IEnumerable<Client> Clients =>
-        new List<Client>
-        {
-            // machine to machine client (from quickstart 1)
-            new Client
+            new[]
             {
-                ClientId = "client",
-                ClientSecrets = { new Secret("secret".Sha256()) },
-
-                AllowedGrantTypes = GrantTypes.ClientCredentials ,
-                // scopes that client has access to
-                AllowedScopes = { "api1" }
-            },
-            // interactive ASP.NET Core MVC client
-            new Client
-            {
-                 ClientName = "Rookie.Ecom.MetaShop.mvc",
-                   ClientId = "mvc",
-                    ClientSecrets = { new Secret("secret".Sha256()) },
-
+                // m2m client credentials flow client
+                new Client
+                {
+                    ClientId = "m2m.client",
+                    ClientName = "Client Credentials Client",
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    ClientSecrets = { new Secret("ClientSecret1".Sha256()) },
+                    AllowedScopes = { "ShopAPI.read", "ShopAPI.write" }
+                },
+                // interactive client using code flow + pkce
+                new Client
+                {
+                    ClientId = "interactive",
+                    ClientSecrets = { new Secret("ClientSecret1".Sha256()) },
                     AllowedGrantTypes = GrantTypes.Code,
-
-                    // where to redirect to after login
-                    RedirectUris = { "https://localhost:5002/signin-oidc" },
-
-                    // where to redirect to after logout
-                    PostLogoutRedirectUris = { "https://localhost:5002/signout-callback-oidc" },
-
-                    // Enable refresh token
+                    RedirectUris = { "https://localhost:5001/signin-oidc" },
+                    PostLogoutRedirectUris = { "https://localhost:5001/signout-callback-oidc" },
                     AllowOfflineAccess = true,
-
-                    AllowedScopes = new List<string>
-                    {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        "roles"
-                    }
-            },
-            new Client
-            {
-                ClientName ="Rookie.Ecom.MetaShop.Admin",
-                ClientId = "rookieecom",
-                ClientSecrets = {new Secret("rookieecom".Sha256()) },
-                AllowedGrantTypes = GrantTypes.Implicit ,
-                RedirectUris = new List<string>()
-                    {
-                        "https://localhost:3000/callback",
-                        "https://localhost:5000/callback"
-                    },
-                 PostLogoutRedirectUris = new List<string>()
-                    {
-                        "https://localhost:3000/",
-                        "https://localhost:5003/"
-                    },
-
-                  AllowedScopes =
-                    {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        "roles"
-                    },
-                  AllowAccessTokensViaBrowser = true
-            }
-        };
+                    AllowedScopes = { "openid", "profile", "ShopAPI.read" },
+                    RequirePkce = true,
+                    RequireConsent = true,
+                    AllowPlainTextPkce = false
+                },
+            };
     }
 }

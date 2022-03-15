@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassLibrary", "ClassLibrar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Indentity", "IndentityServer\Indentity.csproj", "{B79B28B5-EC1E-4ABC-9269-EE73E42401FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin", "Admin\Admin.csproj", "{4386AA49-2FCA-457F-9316-73913ACF1554}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{B79B28B5-EC1E-4ABC-9269-EE73E42401FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B79B28B5-EC1E-4ABC-9269-EE73E42401FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B79B28B5-EC1E-4ABC-9269-EE73E42401FB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4386AA49-2FCA-457F-9316-73913ACF1554}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4386AA49-2FCA-457F-9316-73913ACF1554}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4386AA49-2FCA-457F-9316-73913ACF1554}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4386AA49-2FCA-457F-9316-73913ACF1554}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
