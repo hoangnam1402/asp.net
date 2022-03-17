@@ -22,31 +22,32 @@ namespace BackEnd.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ReadProductDto>>> GetAllProduct(int page)
+        public async Task<ActionResult<List<ReadProductDto>>> GetAllProduct()
         {
             if  (_context.products == null)
             {
                 return NotFound();
             }
 
-            var pageResults = 3f;
-            var pageCount = Math.Ceiling(_context.products.Count() / pageResults);
+            //var pageResults = 3f;
+            //var pageCount = Math.Ceiling(_context.products.Count() / pageResults);
 
-            var product = await _context.products
-                .Skip((page - 1) * (int)pageResults)
-                .Take((int)pageResults)
-                .ToListAsync();
-
+            //var product = await _context.products
+            //    .Skip((page - 1) * (int)pageResults)
+            //    .Take((int)pageResults)
+            //    .ToListAsync();
+            var product = await _context.products.ToListAsync();
+            
             var productDtoResponse = _mapper.Map<List<ReadProductDto>>(product);
 
-            var response = new ProductResponseDto
-            {
-                Products = productDtoResponse,
-                CurrentPages = page,
-                Pages = (int)pageCount
-            };
+            //var response = new ProductResponseDto
+            //{
+            //    Products = productDtoResponse,
+            //    CurrentPages = page,
+            //    Pages = (int)pageCount
+            //};
 
-            return Ok(response);
+            return Ok(productDtoResponse);
         }
 
         [HttpGet("{id}")]

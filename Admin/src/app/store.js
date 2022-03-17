@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import CategoryReducer from '../features/categorySlice';
+import ProductReducer from '../features/productSlice';
 
 import { getDefaultMiddleware } from '@reduxjs/toolkit';
 import createOidcMiddleware from "redux-oidc";
@@ -10,7 +11,7 @@ import { reducer as oidc } from "redux-oidc";
 export const store = configureStore({
   reducer: {
     category: CategoryReducer,
-
+    product: ProductReducer,
     oidc: oidc
   },
   middleware: [...getDefaultMiddleware({

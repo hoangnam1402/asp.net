@@ -116,7 +116,7 @@ export const categorySlice = createSlice({
       .addCase(deleteCategoryAsync.fulfilled, (state, action) => {
         console.log(state.category);
         state.categories = state.categories.filter(
-          (category) => category.id !== state.category.id
+          (category) => category.id !== state.category
         );
 
         swalWithBootstrapButtons.fire(
@@ -148,7 +148,7 @@ export const categorySlice = createSlice({
           state.currentPage = state.currentPage - 1;
         }
       })
-/*      .addCase(deleteCategoryAsync.rejected, (state, action) => {
+      .addCase(deleteCategoryAsync.rejected, (state, action) => {
         swalWithBootstrapButtons.fire(
           "Error",
           action.error || "Something went wrong.",
@@ -176,7 +176,7 @@ export const categorySlice = createSlice({
           "error"
         );
       })
-
+/* 
       .addCase(updateCategoryAsync.fulfilled, (state, action) => {
         const index = state.categories.findIndex(
           (category) => category.id === state.category.id

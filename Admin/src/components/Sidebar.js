@@ -81,7 +81,7 @@ export default (props = {}) => {
         <SimpleBar className={`collapse ${showClass} sidebar d-md-block bg-primary text-white`}>
           <div className="sidebar-inner px-4 pt-3">
             <div className="user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">
-              <div className="d-flex align-items-center">
+              {/* <div className="d-flex align-items-center">
                 <div className="user-avatar lg-avatar me-4">
                   <Image src={ProfilePicture} className="card-img-top rounded-circle border-white" />
                 </div>
@@ -91,7 +91,7 @@ export default (props = {}) => {
                     <FontAwesomeIcon icon={faSignOutAlt} className="me-2" /> Sign Out
                   </Button>
                 </div>
-              </div>
+              </div> */}
               <Nav.Link className="collapse-close d-md-none" onClick={onCollapse}>
                 <FontAwesomeIcon icon={faTimes} />
               </Nav.Link>
@@ -104,10 +104,9 @@ export default (props = {}) => {
               <NavItem title="Categorys" icon={faHandHoldingUsd} link={Routes.Transactions.path} />
               <NavItem title="Products" icon={faHandHoldingUsd} link={Routes.Products.path} />
               <NavItem title="Customers" icon={faHandHoldingUsd} link={Routes.Customers.path} />
-              {/* <NavItem title="Customer" icon={faHandHoldingUsd} link={Routes.Customer.path} /> */}
-              <NavItem title="Sign In" link={Routes.Signin.path} />
+              {/* <NavItem title="Sign In" link={Routes.Signin.path} />
               <NavItem title="Sign Up" link={Routes.Signup.path} />
-{/*               <NavItem title="Settings" icon={faCog} link={Routes.Settings.path} />
+              <NavItem title="Settings" icon={faCog} link={Routes.Settings.path} />
               <NavItem external title="Calendar" link="https://demo.themesberg.com/volt-pro-react/#/calendar" target="_blank" badgeText="Pro" icon={faCalendarAlt} />
               <NavItem external title="Map" link="https://demo.themesberg.com/volt-pro-react/#/map" target="_blank" badgeText="Pro" icon={faMapPin} />
 

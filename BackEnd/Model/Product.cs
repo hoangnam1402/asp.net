@@ -21,13 +21,13 @@ namespace BackEnd.Model
         public string Pic1 { get; set; }
 
         [MaxLength(255)]
-        public string Pic2 { get; set; }
+        public string ? Pic2 { get; set; }
 
         [MaxLength(255)]
-        public string Pic3 { get; set; }
+        public string ? Pic3 { get; set; }
 
         [MaxLength(255)]
-        public string Pic4 { get; set; }
+        public string ? Pic4 { get; set; }
 
         public bool IsFeatured { get; set; }
 

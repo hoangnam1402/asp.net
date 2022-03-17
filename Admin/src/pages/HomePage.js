@@ -8,6 +8,8 @@ import Upgrade from "./Upgrade";
 import DashboardOverview from "./dashboard/DashboardOverview";
 import Transactions from "./Transactions";
 import Customers from "./Customers";
+import Products from "./Products";
+import NewProduct from "./NewProduct"
 import Settings from "./Settings";
 import BootstrapTables from "./tables/BootstrapTables";
 import Signin from "./examples/Signin";
@@ -101,10 +103,10 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
 
 export default () => (
   <Switch>
-    
+{/*    
     <RouteWithLoader exact path={Routes.Signin.path} component={Signin} />
     <RouteWithLoader exact path={Routes.Signup.path} component={Signup} />
-{/*     <RouteWithLoader exact path={Routes.ForgotPassword.path} component={ForgotPassword} />
+    <RouteWithLoader exact path={Routes.ForgotPassword.path} component={ForgotPassword} />
     <RouteWithLoader exact path={Routes.ResetPassword.path} component={ResetPassword} />
     <RouteWithLoader exact path={Routes.Lock.path} component={Lock} /> */}
     <RouteWithLoader exact path={Routes.NotFound.path} component={NotFoundPage} />
@@ -115,6 +117,8 @@ export default () => (
     <RouteWithSidebar exact path={Routes.Upgrade.path} component={Upgrade} /> */}
     <RouteWithSidebar exact path={Routes.Transactions.path} component={Transactions} />
     <RouteWithSidebar exact path={Routes.Customers.path} component={Customers} />
+    <RouteWithSidebar exact path={Routes.Products.path} component={Products} />
+    <RouteWithSidebar exact path={Routes.NewProduct.path} component={NewProduct} />
 {/*     <RouteWithSidebar exact path={Routes.Settings.path} component={Settings} />
     <RouteWithSidebar exact path={Routes.BootstrapTables.path} component={BootstrapTables} />
  */}

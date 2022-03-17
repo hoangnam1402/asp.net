@@ -1,19 +1,42 @@
-import React,{useEffect} from "react";
+import React,{useEffect, useState} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCog, faHome, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup, Dropdown } from '@themesberg/react-bootstrap';
 
 import { TransactionsTable } from "../components/Tables";
 import {useDispatch, useSelector} from 'react-redux';
-import { getAllCategoriesAsync } from "../features/categorySlice";
+import { getAllCategoriesAsync, setCategory } from "../features/categorySlice";
+import { deleteCategoryAsync } from "../features/categorySlice";
+import { createCategoryAsync } from "../features/categorySlice";
 
 export default () => {
   const {categories} = useSelector(state => state.category)
+  const [isCreated, setIsRelated] = useState(false);
+  const [valueForm, setValueForm] = useState({
+    categoryName: "",
+    content: ""
+  })
   const dispatch = useDispatch();
+  const handleDelete = (id) => {
+    dispatch(setCategory(id));
+    dispatch(deleteCategoryAsync({id}));
+    console.log(id);
+  }
+  const handleCreateCategory = (e) => {
+    e.preventDefault()
+    dispatch(createCategoryAsync(valueForm))
+  }
+  const handleCreate = () => {
+    setIsRelated(true)
+  }
+  const handleShow = () => {
+    setIsRelated(false)
+  }
   
 useEffect(() => {
   dispatch(getAllCategoriesAsync());
 },[])
+
   return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
@@ -51,21 +74,16 @@ useEffect(() => {
                   <FontAwesomeIcon icon={faCog} />
                 </span>
               </Dropdown.Toggle>
-{/*               <Dropdown.Menu className="dropdown-menu-xs dropdown-menu-right">
-                <Dropdown.Item className="fw-bold text-dark">Show</Dropdown.Item>
-                <Dropdown.Item className="d-flex fw-bold">
-                  10 <span className="icon icon-small ms-auto"><FontAwesomeIcon icon={faCheck} /></span>
-                </Dropdown.Item>
-                <Dropdown.Item className="fw-bold">20</Dropdown.Item>
-                <Dropdown.Item className="fw-bold">30</Dropdown.Item>
+              <Dropdown.Menu className="dropdown-menu-xs dropdown-menu-right">
+                <Dropdown.Item className="fw-bold" onClick={handleShow} >List</Dropdown.Item>
+                <Dropdown.Item className="fw-bold" onClick={handleCreate} >New</Dropdown.Item>
               </Dropdown.Menu>
- */}
-             </Dropdown>
+            </Dropdown>
           </Col>
         </Row>
       </div>
 
-      {categories && <TransactionsTable categories={categories}/>}
+      {categories && <TransactionsTable isCreate={isCreated} valueForm={valueForm} handleCreateCategory={handleCreateCategory} setValueForm={setValueForm} categories={categories} handleDelete={handleDelete}/>}
     </>
   );
 };

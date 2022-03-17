@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp, faArrowDown, faArrowUp, faEdit, faEllipsisH, faExternalLinkAlt, faEye, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { Col, Row, Nav, Card, Image, Button, Table, Dropdown, ProgressBar, Pagination, ButtonGroup } from '@themesberg/react-bootstrap';
+import { Col, Row, Nav, Card, Image, Button, Table, Dropdown, ProgressBar, Pagination, ButtonGroup,InputGroup ,Form, FormText } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import { Routes } from "../routes";
@@ -12,8 +12,6 @@ import customer from "../data/transactions";
 
 import commands from "../data/commands";
 import {useDispatch, useSelector} from 'react-redux'
-
-import { getAllCategoriesAsync } from "../features/categorySlice";
 
 const ValueChange = ({ value, suffix }) => {
   const valueIcon = value < 0 ? faAngleDown : faAngleUp;
@@ -192,11 +190,13 @@ export const RankingTable = () => {
   );
 };
 
-export const TransactionsTable = ({categories}) => {
+export const TransactionsTable = ({categories,handleDelete,isCreate, valueForm ,setValueForm ,handleCreateCategory}) => {
   const totalTransactions = categories.length;
+  const handleChange = (e) => {
+    setValueForm({...valueForm, [e.target.name]: e.target.value})
+  }
 
   const TableRow = ({listCategory}) => {
-    
     return (
       <tr>
         <td>
@@ -225,7 +225,7 @@ export const TransactionsTable = ({categories}) => {
               <Dropdown.Item>
                 <FontAwesomeIcon icon={faEye} className="me-2" /> View Details
               </Dropdown.Item>
-              <Dropdown.Item className="text-danger">
+              <Dropdown.Item className="text-danger" onClick={() => handleDelete(listCategory.id)}>
                 <FontAwesomeIcon icon={faTrashAlt} className="me-2" /> Remove
               </Dropdown.Item>
             </Dropdown.Menu>
@@ -248,7 +248,27 @@ export const TransactionsTable = ({categories}) => {
             </tr>
           </thead>
           <tbody>
-            {categories.map(item => <TableRow listCategory={item} />)}
+            {isCreate ? (
+              <Row>
+                <Col md={4} className="mb-3">
+                  <Form.Group id="categoryName">
+                    <Form.Control name="categoryName" onChange={handleChange} required type="text" placeholder="Category name" />
+                  </Form.Group>
+                </Col>
+                <Col md={6} className="mb-3">
+                  <Form.Group id="categoryContent">
+                    <Form.Control name="content" onChange={handleChange} required type="text" placeholder="Category content" />
+                  </Form.Group>
+                </Col>
+                <Col md={2} className="mb-3">
+                  <Button onClick={handleCreateCategory}>
+                    Create
+                  </Button>
+                </Col>
+              </Row>
+            ) : (
+              categories.map(item => <TableRow listCategory={item} />)
+            )}
           </tbody>
         </Table>
         <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">
@@ -261,46 +281,51 @@ export const TransactionsTable = ({categories}) => {
   );
 };
 
-export const ProductTable = () => {
-  const totalProducts = transactions.length;
+export const ProductTable = ({products,handleDelete,isCreate, valueForm ,setValueForm ,handleCreateProduct}) => {
+  const totalProducts = products.length;
+  const handleChange = (e) => {
+    setValueForm({...valueForm, [e.target.name]: e.target.value})
+  }
 
-  const TableRow = (props) => {
-    const { invoiceNumber, subscription, price, issueDate, dueDate, status } = props;
-    const statusVariant = status === "Paid" ? "success"
-      : status === "Due" ? "warning"
-        : status === "Canceled" ? "danger" : "primary";
-
-    
+  const TableRow = ({listProduct}) => {
+    const istopped = `${listProduct.stopped}` === "true" ? "danger" : "success"
+    const published = `${listProduct.isPublished}` === "true" ? "success" : "warning"
+  console.log(listProduct);
     return (
       <tr>
-        <td>
+        {/* <td>
           <Card.Link as={Link} to={Routes.Invoice.path} className="fw-normal">
             {invoiceNumber}
           </Card.Link>
-        </td>
+        </td> */}
         <td>
           <span className="fw-normal">
-            {subscription}
+            {listProduct.name}
           </span>
         </td>
         <td>
           <span className="fw-normal">
-            {issueDate}
+            {listProduct.description}
           </span>
         </td>
         <td>
           <span className="fw-normal">
-            {dueDate}
+            {listProduct.cost}
           </span>
         </td>
         <td>
           <span className="fw-normal">
-            ${parseFloat(price).toFixed(2)}
+            {listProduct.quantity}
           </span>
         </td>
         <td>
-          <span className={`fw-normal text-${statusVariant}`}>
-            {status}
+          <span className={`fw-normal text-${istopped}`}>
+            {`${listProduct.stopped}`}
+          </span>
+        </td>
+        <td>
+          <span className={`fw-normal text-${published}`}>
+            {`${listProduct.isPublished}`}
           </span>
         </td>
         <td>
@@ -317,7 +342,7 @@ export const ProductTable = () => {
               <Dropdown.Item>
                 <FontAwesomeIcon icon={faEdit} className="me-2" /> Edit
               </Dropdown.Item>
-              <Dropdown.Item className="text-danger">
+              <Dropdown.Item className="text-danger" onClick={() => handleDelete(listProduct.id)}>
                 <FontAwesomeIcon icon={faTrashAlt} className="me-2" /> Remove
               </Dropdown.Item>
             </Dropdown.Menu>
@@ -333,21 +358,41 @@ export const ProductTable = () => {
         <Table hover className="user-table align-items-center">
           <thead>
             <tr>
-              <th className="border-bottom">#</th>
-              <th className="border-bottom">Bill For</th>
-              <th className="border-bottom">Issue Date</th>
-              <th className="border-bottom">Due Date</th>
-              <th className="border-bottom">Total</th>
-              <th className="border-bottom">Status</th>
-              <th className="border-bottom">Action</th>
+              <th className="border-bottom">Name</th>
+              <th className="border-bottom">Description</th>
+              <th className="border-bottom">Price</th>
+              <th className="border-bottom">Quantity</th>
+              <th className="border-bottom">Stop sale</th>
+              <th className="border-bottom">Published</th>
+              <th className="border-bottom">ACTION</th>
             </tr>
           </thead>
           <tbody>
-            {transactions.map(t => <TableRow key={`transaction-${t.invoiceNumber}`} {...t} />)}
+          {isCreate ? (
+              <Row>
+                <Col md={12} className="mb-3">
+                  <Form.Group id="categoryName">
+                    <Form.Control name="name" onChange={handleChange} required type="text" placeholder="Product name" />
+                  </Form.Group>
+                </Col>
+                <Col md={12} className="mb-3">
+                  <Form.Group id="categoryContent">
+                    <Form.Control name="content" onChange={handleChange} required type="text" placeholder="Category content" />
+                  </Form.Group>
+                </Col>
+                <Col md={2} className="mb-3">
+                  <Button onClick={handleCreateProduct}>
+                    Create
+                  </Button>
+                </Col>
+              </Row>
+            ) : (
+              products.map(item => <TableRow listProduct={item} />)
+            )}
           </tbody>
         </Table>
         <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">
-          <Nav>
+{/*           <Nav>
             <Pagination className="mb-2 mb-lg-0">
               <Pagination.Prev>
                 Previous
@@ -361,9 +406,9 @@ export const ProductTable = () => {
                 Next
               </Pagination.Next>
             </Pagination>
-          </Nav>
+          </Nav> */}
           <small className="fw-bold">
-            Showing <b>{totalProducts}</b> out of <b>25</b> entries
+            Total <b>{totalProducts}</b> product entries
           </small>
         </Card.Footer>
       </Card.Body>

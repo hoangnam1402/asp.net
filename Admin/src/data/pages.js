@@ -21,21 +21,21 @@ export default [
         "link": Routes.DashboardOverview.path
     }, */
     {
-        "id": 2,
+        "id": 1,
         "name": "Transactions",
         "image": TransactionsImg,
         "link": Routes.Transactions.path
     },
 
     {
-        "id": 3,
+        "id": 2,
         "name": "Product",
         "image": TransactionsImg,
         "link": Routes.Products.path
     },
 
     {
-        "id": 4,
+        "id": 3,
         "name": "Customers",
         "image": TransactionsImg,
         "link": Routes.Customers.path
@@ -45,7 +45,7 @@ export default [
         "name": "Settings",
         "image": SettingsImg,
         "link": Routes.Settings.path
-    }, */
+    },
     {
         "id": 4,
         "name": "Sign In",
@@ -58,7 +58,7 @@ export default [
         "image": SignUpImg,
         "link": Routes.Signup.path
     },
-    /* {
+    {
         "id": 6,
         "name": "Lock",
         "image": LockImg,

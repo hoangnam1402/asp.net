@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import {getStorage} from "firebase/storage";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import uuid from "./uuid";
+import uuid from "./uuid.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
