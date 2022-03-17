@@ -31,7 +31,7 @@ export const deleteProductAsync = createAsyncThunk(
   "products/deleteProduct",
   async (values, { rejectWithValue }) => {
     try {
-      const response = await axiosClient.delete(`/product`);
+      const response = await axiosClient.delete(`/product/${values.id}`);
       return response;
     } catch (error) {
       return rejectWithValue(error.response);
@@ -90,7 +90,7 @@ export const productSlice = createSlice({
       .addCase(deleteProductAsync.fulfilled, (state, action) => {
         console.log(state.product);
         state.products = state.products.filter(
-          (product) => product.id !== state.product.id
+          (product) => product.id !== state.product
         );
         
         swalWithBootstrapButtons.fire(
@@ -99,7 +99,7 @@ export const productSlice = createSlice({
           "success"
         );
         
-        const deletePromise = [];
+/*         const deletePromise = [];
         state.product.productPictures["$values"].forEach((productPic) => {
           const beforeUrlLink = exactFirebaseLink(productPic.pictureUrl);
           if (beforeUrlLink !== null) {
@@ -113,7 +113,7 @@ export const productSlice = createSlice({
           console.log("All files deleted");
         }).catch((error) => {
           console.log(error);
-        });
+        }); */
 
         state.product = null;
 

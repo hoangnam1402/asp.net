@@ -14,13 +14,13 @@ export default () => {
     description: "",
     cost: 0,
     quantity: 0,
-    stopped: false,
+    stopped: Boolean(false),
     categoryId: "",
     pic1: "",
     pic2: "",
     pic3: "",
     pic4: "",
-    isPublished: false,
+    isPublished: Boolean(false),
   })
   
   const dispatch = useDispatch();
@@ -80,18 +80,18 @@ export default () => {
                 <Col md={3} className="mb-3">
                   <Form.Group id="stopped">
                     <Form.Label>Stop sale</Form.Label>
-                    <Form.Select name="stopped" onChange={handleChange} defaultValue="false">
-                      <option value="true">Yes</option>
-                      <option value="false">No</option>
+                    <Form.Select name="stopped" onChange={handleChange} defaultValue={Boolean(false)}>
+                      <option value={Boolean(true)}>Yes</option>
+                      <option value={Boolean(false)}>No</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
                 <Col md={3} className="mb-3">
                   <Form.Group id="isPublished">
                     <Form.Label>Published</Form.Label>
-                    <Form.Select name="isPublished" onChange={handleChange} defaultValue="false">
-                      <option value="true">Yes</option>
-                      <option value="false">No</option>
+                    <Form.Select name="isPublished" onChange={handleChange} defaultValue={Boolean(false)}>
+                      <option value={Boolean(true)}>Yes</option>
+                      <option value={Boolean(false)}>No</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -101,13 +101,37 @@ export default () => {
                   <Form.Group id="categoryId">
                     <Form.Label>Category</Form.Label>
                     <Form.Select name="categoryId" onChange={handleChange} defaultValue="">
-                      $(for (let index = 0; index < categories.length ; index++) {
-                      <option value="true">Yes</option>                        
-                      })
-                      <option value="true">Yes</option>
-                      <option value="false">No</option>
+                      {categories?.map(item => 
+                        <option value={item.id}>{item.categoryName}</option>
+                      )}
                       <option value="">Don't have</option>
                     </Form.Select>
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row>
+                <Col md={12} className="mb-3">
+                  <Form.Group id="pic1">
+                    <Form.Label>Product Picture</Form.Label>
+                    <Form.Control name="pic1" onChange={handleChange} required type="text" placeholder="Enter product picture 1 url" />
+                  </Form.Group>
+                </Col>
+              </Row><Row>
+                <Col md={12} className="mb-3">
+                  <Form.Group id="pic2">
+                    <Form.Control name="pic2" onChange={handleChange} required type="text" placeholder="Enter product picture 2 url" />
+                  </Form.Group>
+                </Col>
+              </Row><Row>
+                <Col md={12} className="mb-3">
+                  <Form.Group id="pic3">
+                    <Form.Control name="pic3" onChange={handleChange} required type="text" placeholder="Enter product picture 3 url" />
+                  </Form.Group>
+                </Col>
+              </Row><Row>
+                <Col md={12} className="mb-3">
+                  <Form.Group id="pic4">
+                    <Form.Control name="pic4" onChange={handleChange} required type="text" placeholder="Enter product picture 4 url" />
                   </Form.Group>
                 </Col>
               </Row>

@@ -13,7 +13,7 @@ import { useHistory } from "react-router-dom";
 
 export default () => {
   const {products} = useSelector(state => state.product)
-  const [isCreated, setIsRelated] = useState(false);
+  const [valueSearch, setValueSearch] = useState("")
   const [valueForm, setValueForm] = useState({
     name: "",
     description: "",
@@ -37,12 +37,10 @@ export default () => {
     e.preventDefault()
     dispatch(createProductAsync(valueForm))
   }
-  const handleCreate = () => {
-    setIsRelated(true)
+  const handleChange = (e) => {
+    setValueSearch(e.target = e.target.value)
   }
-  const handleShow = () => {
-    setIsRelated(false)
-  }
+  console.log(valueSearch);
 
   const history = useHistory();
 useEffect(() => {
@@ -72,7 +70,7 @@ useEffect(() => {
         <Row className="justify-content-between align-items-center">
           <Col xs={8} md={6} lg={3} xl={4}>
             <InputGroup>
-              <InputGroup.Text>
+              <InputGroup.Text onChange={handleChange}>
                 <FontAwesomeIcon icon={faSearch} />
               </InputGroup.Text>
               <Form.Control type="text" placeholder="Search" />
@@ -86,7 +84,6 @@ useEffect(() => {
                 </span>
               </Dropdown.Toggle>
               <Dropdown.Menu className="dropdown-menu-xs dropdown-menu-right">
-                <Dropdown.Item className="fw-bold" onClick={handleShow} >List</Dropdown.Item>
                 <Dropdown.Item className="fw-bold" onClick={() => {
                   history.push("/NewProduct")
                 }} >New</Dropdown.Item>
@@ -96,7 +93,7 @@ useEffect(() => {
         </Row>
       </div>
 
-      {products && <ProductTable isCreate={isCreated} valueForm={valueForm} handleCreateProduct={handleCreateProduct} setValueForm={setValueForm} products={products} handleDelete={handleDelete}/>}
+      {products && <ProductTable valueSearch={valueSearch} valueForm={valueForm} handleCreateProduct={handleCreateProduct} setValueForm={setValueForm} products={products} handleDelete={handleDelete}/>}
     </>
   );
 };

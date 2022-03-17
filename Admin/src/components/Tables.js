@@ -281,7 +281,7 @@ export const TransactionsTable = ({categories,handleDelete,isCreate, valueForm ,
   );
 };
 
-export const ProductTable = ({products,handleDelete,isCreate, valueForm ,setValueForm ,handleCreateProduct}) => {
+export const ProductTable = ({products, handleDelete, valueForm ,setValueForm ,handleCreateProduct}) => {
   const totalProducts = products.length;
   const handleChange = (e) => {
     setValueForm({...valueForm, [e.target.name]: e.target.value})
@@ -368,27 +368,7 @@ export const ProductTable = ({products,handleDelete,isCreate, valueForm ,setValu
             </tr>
           </thead>
           <tbody>
-          {isCreate ? (
-              <Row>
-                <Col md={12} className="mb-3">
-                  <Form.Group id="categoryName">
-                    <Form.Control name="name" onChange={handleChange} required type="text" placeholder="Product name" />
-                  </Form.Group>
-                </Col>
-                <Col md={12} className="mb-3">
-                  <Form.Group id="categoryContent">
-                    <Form.Control name="content" onChange={handleChange} required type="text" placeholder="Category content" />
-                  </Form.Group>
-                </Col>
-                <Col md={2} className="mb-3">
-                  <Button onClick={handleCreateProduct}>
-                    Create
-                  </Button>
-                </Col>
-              </Row>
-            ) : (
-              products.map(item => <TableRow listProduct={item} />)
-            )}
+            {products.map(item => <TableRow listProduct={item} />)}
           </tbody>
         </Table>
         <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">
