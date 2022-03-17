@@ -20,7 +20,6 @@ export default () => {
   const handleDelete = (id) => {
     dispatch(setCategory(id));
     dispatch(deleteCategoryAsync({id}));
-    console.log(id);
   }
   const handleCreateCategory = (e) => {
     e.preventDefault()

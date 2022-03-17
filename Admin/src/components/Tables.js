@@ -281,11 +281,8 @@ export const TransactionsTable = ({categories,handleDelete,isCreate, valueForm ,
   );
 };
 
-export const ProductTable = ({products, handleDelete, valueForm ,setValueForm ,handleCreateProduct}) => {
+export const ProductTable = ({products, valueSearch, handleDelete}) => {
   const totalProducts = products.length;
-  const handleChange = (e) => {
-    setValueForm({...valueForm, [e.target.name]: e.target.value})
-  }
 
   const TableRow = ({listProduct}) => {
     const istopped = `${listProduct.stopped}` === "true" ? "danger" : "success"

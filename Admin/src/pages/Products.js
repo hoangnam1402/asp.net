@@ -14,28 +14,11 @@ import { useHistory } from "react-router-dom";
 export default () => {
   const {products} = useSelector(state => state.product)
   const [valueSearch, setValueSearch] = useState("")
-  const [valueForm, setValueForm] = useState({
-    name: "",
-    description: "",
-    cost: 0,
-    quantity: 0,
-    stopped: false,
-    categoryId: "",
-    pic1: "",
-    pic2: "",
-    pic3: "",
-    pic4: "",
-    isPublished: false,
-  })
   const dispatch = useDispatch();
   const handleDelete = (id) => {
     dispatch(setProduct(id));
     dispatch(deleteProductAsync({id}));
     console.log(id);
-  }
-  const handleCreateProduct = (e) => {
-    e.preventDefault()
-    dispatch(createProductAsync(valueForm))
   }
   const handleChange = (e) => {
     setValueSearch(e.target = e.target.value)
@@ -76,24 +59,15 @@ useEffect(() => {
               <Form.Control type="text" placeholder="Search" />
             </InputGroup>
           </Col>
-          <Col xs={4} md={2} xl={1} className="ps-md-0 text-end">
-            <Dropdown as={ButtonGroup}>
-              <Dropdown.Toggle split as={Button} variant="link" className="text-dark m-0 p-0">
-                <span className="icon icon-sm icon-gray">
-                  <FontAwesomeIcon icon={faCog} />
-                </span>
-              </Dropdown.Toggle>
-              <Dropdown.Menu className="dropdown-menu-xs dropdown-menu-right">
-                <Dropdown.Item className="fw-bold" onClick={() => {
+          <Col xs={4} md={2} xl={2} className="ps-md-0 text-end">
+            <Button onClick={() => {
                   history.push("/NewProduct")
-                }} >New</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+            }} >New Product</Button>
           </Col>
         </Row>
       </div>
 
-      {products && <ProductTable valueSearch={valueSearch} valueForm={valueForm} handleCreateProduct={handleCreateProduct} setValueForm={setValueForm} products={products} handleDelete={handleDelete}/>}
+      {products && <ProductTable valueSearch={valueSearch} products={products} handleDelete={handleDelete}/>}
     </>
   );
 };
