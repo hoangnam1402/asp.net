@@ -13,9 +13,9 @@ namespace ClassLibrary
             //services.AddDataAccessorLayer(configuration);
             //services.AddIdentityLayer(configuration);
 
-            //services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-            //services.AddTransient<ICustomerClass, ClassCustomer>();
+            services.AddTransient<ICustomerClass, ClassCustomer>();
             services.AddTransient<ICategoryClass, ClassCategory>();
             services.AddTransient<IProductClass, ClassProduct>();
             services.AddDbContext<ApplicationDbContext>(options =>

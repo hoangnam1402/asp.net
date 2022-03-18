@@ -2,10 +2,11 @@
 using BackEnd.DTO.CategoryDTO;
 using BackEnd.DTO.ProductDTO;
 using BackEnd.Model;
+using ClassLibrary.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace ClassLibrary
+namespace ClassLibrary.Service
 {
     public class ClassCategory : ICategoryClass
     {

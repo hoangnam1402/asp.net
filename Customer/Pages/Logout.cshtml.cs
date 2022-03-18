@@ -5,8 +5,9 @@ namespace Customer.Pages
 {
     public class LogoutModel : PageModel
     {
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            return SignOut("Cookies", "oidc");
         }
     }
 }

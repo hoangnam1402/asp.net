@@ -1,3 +1,5 @@
+using BackEnd.DTO.CustomerDTO;
+using ClassLibrary;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -7,21 +9,19 @@ namespace Customer.Pages
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly IMetaIdentityUserService _metaIdentityUserService;
+        private readonly ICustomerClass _metaIdentityUserService;
 
         [BindProperty]
-        public UserRegistrationDto UserRegistration { get; set; }
+        public CreateUserDto UserRegistration { get; set; }
 
-        public RegisterModel(IMetaIdentityUserService metaIdentityUserService)
+        public RegisterModel(ICustomerClass metaIdentityUserService)
         {
 
-            UserRegistration = new UserRegistrationDto();
+            UserRegistration = new CreateUserDto();
             _metaIdentityUserService = metaIdentityUserService;
         }
         public IActionResult OnGet()
         {
-            if (!User.Identity.IsAuthenticated)
-                return RedirectToPage("/Home/Login");
             return Page();
         }
 
@@ -36,7 +36,7 @@ namespace Customer.Pages
                 if (result.Succeeded)
                 {
                     TempData["AlertMessage"] = "Register Successfully";
-                    return RedirectToPage("/Auth/Login");
+                    return RedirectToPage("/Login");
                 }
                 else
                 {

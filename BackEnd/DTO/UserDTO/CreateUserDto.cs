@@ -8,6 +8,10 @@ namespace BackEnd.DTO.CustomerDTO
         [StringLength(50)]
         public string Name { get; set; }
 
+        [Required(ErrorMessage = "User Name is required")]
+        [StringLength(50)]
+        public string UserName { get; set; }
+
         [Required(ErrorMessage = "Passwork Name is required")]
         public string Password { get; set; }
 

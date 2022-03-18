@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassLibrary
+namespace ClassLibrary.Interface
 {
     public interface ICustomerClass
     {
-        //Task<IdentityResult> Register(CreateCustomerDto request, string role);
+        Task<IdentityResult> Register(CreateUserDto request, string role);
 
-        //Task<ReadCustomerDto> GetById(string id);
+        Task<ReadUserDto> GetById(string id);
     }
 }

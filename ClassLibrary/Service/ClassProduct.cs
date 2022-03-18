@@ -3,19 +3,23 @@ using BackEnd.Data;
 using BackEnd.DTO.ProductDTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ClassLibrary.Interface;
+using AutoMapper;
+using BackEnd.Interface;
 
-namespace ClassLibrary
+namespace ClassLibrary.Service
 {
     public class ClassProduct : IProductClass
     {
-        private readonly ApplicationDbContext _context;
-
-        public ClassProduct(ApplicationDbContext context)
+        private readonly IBaseRepository<Product> _baseRepository;
+        private readonly IMapper _mapper;
+        public ClassProduct(IBaseRepository<Product> baseRepository, IMapper mapper)
         {
-            _context = context;
+            _baseRepository = baseRepository;
+            _mapper = mapper;
         }
 
-        public List<Product> GetProduct()
+        public async Task<List<ReadProductDto>> GetAsync()
         {
             var product = _context.products.Where(x => x.stopped == false).ToList();
             //var product = _context.products.ToList();
