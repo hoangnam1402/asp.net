@@ -11,9 +11,10 @@ namespace ClassLibrary.Interface
     public interface IOrderItemClass
     {
         Task<ReadOrderItemDto> AddOrderItemAsync(CreateOrderItemDto createOrderItemDto);
-        Task<List<ReadOrderItemDto>> AddRangeOrderItemsAsync(List<CreateOrderItemDto> createOrderItemDtos);
 
-        Task<ReadOrderItemDto> GetOrderItemByIdAsync(Guid id);
+        Task<List<ReadOrderItemDto>> GetOrderByOrderIdAsync(Guid id);
+
+        Task<List<ReadOrderItemDto>> AddRangeOrderItemsAsync(List<CreateOrderItemDto> createOrderItemDtos);
 
         Task<List<ReadProductRatingDto>> GetListProductRatingByProductIdAsync(Guid productId);
     }

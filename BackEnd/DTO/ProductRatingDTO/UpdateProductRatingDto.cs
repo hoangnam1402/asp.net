@@ -12,5 +12,7 @@ namespace BackEnd.DTO.ProductRatingDTO
         public float Rating { get; set; } = 5;
 
         public bool IsRated { get; set; } = true;
+
+        public DateTime UpdatedDate { get; set; }
     }
 }

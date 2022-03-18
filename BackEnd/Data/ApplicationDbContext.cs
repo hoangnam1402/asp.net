@@ -12,5 +12,11 @@ namespace BackEnd.Data
         public DbSet<Category> categories { get; set; }
 
         public DbSet<User> users { get; set; }
+
+        public DbSet<Order> orders { get; set; }
+
+        public DbSet<OrderItem> orderItems { get; set; }
+
+        public DbSet<ProductRating> productsRating { get; set; }
     }
 }

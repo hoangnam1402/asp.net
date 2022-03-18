@@ -1,4 +1,5 @@
-﻿using BackEnd.DTO.ProductDTO;
+﻿using BackEnd.DTO;
+using BackEnd.DTO.ProductDTO;
 using BackEnd.Model;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,23 +12,10 @@ namespace ClassLibrary.Interface
 {
     public interface IProductClass
     {
-        Task<IEnumerable<ReadProductDto>> GetAllAsync();
+        public List<Product> GetProduct();
 
-        Task<PagedResponseModel<ReadProductDto>> PagedQueryAsync(string name, Guid? categoryId, int? page, int limit);
+        public Product GetProductDetail(Guid id);
 
-        Task<ReadProductDto> GetByIdAsync(Guid id);
-
-        Task<ReadProductDto> GetByNameAsync(string name);
-
-        Task<ReadProductDto> AddAsync(CreateProductDto ProductDto);
-
-        Task DeleteAsync(Guid id);
-
-        Task UpdateAsync(UpdateProductDto ProductDto);
-        Task SoftDeleteAsync(Guid id);
-
-        Task<List<ReadProductDto>> GetRelatedProducts(Guid categroyId, int num);
-
-        Task<List<ReadProductDto>> FilterProducts(bool isLastest, bool isFeatured, int num);
+        public List<ProductRating> GetAllRating();
     }
 }

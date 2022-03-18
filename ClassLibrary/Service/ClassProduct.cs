@@ -5,21 +5,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ClassLibrary.Interface;
 using AutoMapper;
-using BackEnd.Interface;
 
 namespace ClassLibrary.Service
 {
     public class ClassProduct : IProductClass
     {
-        private readonly IBaseRepository<Product> _baseRepository;
-        private readonly IMapper _mapper;
-        public ClassProduct(IBaseRepository<Product> baseRepository, IMapper mapper)
+        private readonly ApplicationDbContext _context;
+        public ClassProduct(ApplicationDbContext context)
         {
-            _baseRepository = baseRepository;
-            _mapper = mapper;
+            _context = context;
         }
 
-        public async Task<List<ReadProductDto>> GetAsync()
+        public List<Product> GetProduct()
         {
             var product = _context.products.Where(x => x.stopped == false).ToList();
             //var product = _context.products.ToList();
@@ -42,5 +39,13 @@ namespace ClassLibrary.Service
 
             return product;
         }
+        public List<ProductRating> GetAllRating()
+        {
+            if (_context.productsRating == null)
+                return null;
+            var rating = _context.productsRating.ToList();
+            return rating;
+        }
+
     }
 }

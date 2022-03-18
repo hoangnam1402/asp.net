@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ClassLibrary;
 using BackEnd.Model;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
 using BackEnd.DTO.ProductDTO;
 using BackEnd.DTO.CategoryDTO;
+using ClassLibrary.Interface;
+using BackEnd.DTO.ProductRatingDTO;
 
 namespace Customer.Pages
 {
@@ -23,15 +24,19 @@ namespace Customer.Pages
         }
 
         public List<Product> products { get; set; }
+        public Product product { get; set; }
 
         [BindProperty]
         public List<Category> categories { get; set; }
+
+        public List<ProductRating> productRatings { get; set; }
 
         public void OnGet()
         {
             products = productClass.GetProduct();
             categories = categoryClass.GetCategories();
-            if(category != null)
+            productRatings = productClass.GetAllRating();
+            if (category != null)
             {
                 products = products.Where(x => x.CategoryId.ToString() == category).ToList();
             }
@@ -58,6 +63,5 @@ namespace Customer.Pages
 
         [BindProperty(SupportsGet = true)]
         public string category { get; set; }
-
     }
 }

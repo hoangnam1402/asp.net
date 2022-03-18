@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ClassLibrary.Interface;
+using BackEnd.DTO.OrderDTO;
+using BackEnd.DTO.ProductRatingDTO;
 
 namespace Customer.Pages
 {
@@ -16,8 +18,8 @@ namespace Customer.Pages
         private readonly IOrderItemClass _orderItemService;
         private readonly IProductRatingClass _productRatingService;
 
-        public CheckoutModel(IMetaIdentityUserService metaIdentityUserService, IOrderService orderService,
-            IOrderItemService orderItemService, IProductRatingService productRatingService)
+        public CheckoutModel(ICustomerClass metaIdentityUserService, IOrderClass orderService,
+            IOrderItemClass orderItemService, IProductRatingClass productRatingService)
         {
             _metaIdentityUserService = metaIdentityUserService;
             _orderService = orderService;
@@ -25,8 +27,8 @@ namespace Customer.Pages
             _productRatingService = productRatingService;
         }
 
-        public List<ProductItemCartDto> Cart { get; set; }
-        public MetaIdentityUserDto CurrentUser { get; set; }
+        public List<ProductCartDto> Cart { get; set; }
+        public ReadUserDto CurrentUser { get; set; }
 
         [BindProperty]
         public CreateOrderDto CreateOrder { get; set; }
@@ -34,23 +36,19 @@ namespace Customer.Pages
         public async Task<IActionResult> OnGet()
         {
             if (!User.Identity.IsAuthenticated)
-                return RedirectToPage("/Home/Login");
+                return RedirectToPage("/Login");
 
-            Cart = SessionHelper.GetObjectFromJson<List<ProductItemCartDto>>(HttpContext.Session, "cart");
+            Cart = SessionHelper.GetObjectFromJson<List<ProductCartDto>>(HttpContext.Session, "cart");
             CurrentUser = await _metaIdentityUserService.GetById(User.Claims.FirstOrDefault(u => u.Type == "sub").Value);
             CreateOrder = new CreateOrderDto
             {
-                FirstName = CurrentUser.FirstName,
-                LastName = CurrentUser.LastName,
-                Country = CurrentUser.Country,
-                Line1 = CurrentUser.Line1,
-                Line2 = CurrentUser.Line2,
-                PhoneNumber = CurrentUser.PhoneNumber,
-                Province = CurrentUser.Province
+                Name = CurrentUser.Name,
+                Address = CurrentUser.Address,
+                PhoneNumber = CurrentUser.PhoneNumber
             };
             if (Cart == null)
-                return RedirectToPage("/Home/Index");
-            TotalMoney = Cart.Sum(p => p.Quantity * p.Product.Price);
+                return RedirectToPage("/");
+            TotalMoney = Cart.Sum(p => p.Quantity * p.Product.cost);
 
             return Page();
         }
@@ -65,15 +63,15 @@ namespace Customer.Pages
             if (ModelState.IsValid)
             {
 
-                Cart = SessionHelper.GetObjectFromJson<List<ProductItemCartDto>>(HttpContext.Session, "cart");
+                Cart = SessionHelper.GetObjectFromJson<List<ProductCartDto>>(HttpContext.Session, "cart");
 
                 if (Cart != null)
                 {
                     Guid userId = Guid.Parse(User.Claims.FirstOrDefault(u => u.Type == "sub").Value);
-                    CreateOrder.TotalPrice = Cart.Sum(p => p.Quantity * p.Product.Price);
+                    CreateOrder.TotalPrice = Cart.Sum(p => p.Quantity * p.Product.cost);
                     CreateOrder.Status = "Success";
-                    CreateOrder.CreatedBy = CreateOrder.UpdatedBy = userId;
-                    OrderDto order = await _orderService.CreateOrder(CreateOrder);
+                    //CreateOrder.CreatedBy = CreateOrder.UpdatedBy = userId;
+                    ReadOrderDto order = await _orderService.CreateOrder(CreateOrder);
                     List<CreateOrderItemDto> createOrderItemDtos = new List<CreateOrderItemDto>();
                     List<CreateProductRatingDto> createProductRatingDtos = new List<CreateProductRatingDto>();
                     foreach (var item in Cart)
@@ -81,11 +79,9 @@ namespace Customer.Pages
                         createOrderItemDtos.Add(new CreateOrderItemDto
                         {
                             OrderId = order.Id,
-                            Price = item.Product.Price,
+                            Price = item.Product.cost,
                             Quantity = item.Quantity,
-                            ProductId = item.Product.Id,
-                            CreatedBy = userId,
-                            UpdatedBy = userId
+                            ProductId = item.Product.Id
                         });
 
                         // init temporary
@@ -95,13 +91,11 @@ namespace Customer.Pages
                             OrderItemId = order.Id,
                             IsRated = false,
                             Comment = "",
-                            Rating = 5,
-                            CreatedBy = userId,
-                            UpdatedBy = userId
+                            Rating = 5
                         });
                     }
 
-                    List<OrderItemDto> orderItemDtos = await _orderItemService.AddRangeOrderItemsAsync(createOrderItemDtos);
+                    List<ReadOrderItemDto> orderItemDtos = await _orderItemService.AddRangeOrderItemsAsync(createOrderItemDtos);
 
                     for (int i = 0; i < orderItemDtos.Count; i++)
                     {
