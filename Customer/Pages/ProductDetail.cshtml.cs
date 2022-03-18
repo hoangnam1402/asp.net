@@ -2,12 +2,14 @@ using BackEnd.DTO.ProductDTO;
 using BackEnd.Model;
 using ClassLibrary;
 using Customer.Helper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Linq;
 
 namespace Customer.Pages
 {
+    [Authorize]
     public class ProductDetailModel : PageModel
     {
         private readonly ILogger<PrivacyModel> _logger;

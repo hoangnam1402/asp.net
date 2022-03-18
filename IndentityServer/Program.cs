@@ -1,4 +1,5 @@
 using BackEnd.Model;
+using Identity;
 using Identity.Data;
 using IdentityServer4;
 using IdentityServer4.AspNetIdentity;
@@ -25,17 +26,23 @@ var builder = WebApplication.CreateBuilder(args);
 var assembly = typeof(Program).Assembly.GetName().Name;
 var defaultConnString = builder.Configuration.GetConnectionString("DbConnection");
 
-SeedData.EnsureSeedData(defaultConnString);
+if (seed)
+{
+    SeedData.EnsureSeedData(defaultConnString);
+}
 
 builder.Services.AddDbContext<AspNetIdentityDbContext>(options =>
     options.UseSqlServer(defaultConnString,
         b => b.MigrationsAssembly(assembly)));
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-    .AddEntityFrameworkStores<AspNetIdentityDbContext>();
+builder.Services.AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<AspNetIdentityDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.AddAuthentication();
 
 builder.Services.AddIdentityServer()
-    .AddAspNetIdentity<IdentityUser>()
+    .AddAspNetIdentity<User>()
     .AddConfigurationStore(options =>
     {
         options.ConfigureDbContext = b =>
@@ -48,12 +55,15 @@ builder.Services.AddIdentityServer()
     })
     .AddDeveloperSigningCredential();
 
+builder.Services.AddIdentityLayer(builder.Configuration);
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseIdentityServer();
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {

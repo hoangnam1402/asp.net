@@ -15,7 +15,6 @@ namespace BackEnd.DTO.CustomerDTO
         [Compare("Password", ErrorMessage = "The Password and Confirm Password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        [EmailAddress(ErrorMessage = "Invalid email address")]
         [Required(ErrorMessage = "Address Name is required")]
         public string Address { get; set; }
 

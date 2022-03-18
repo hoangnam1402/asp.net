@@ -14,13 +14,13 @@ export default () => {
     description: "",
     cost: 0,
     quantity: 0,
-    stopped: Boolean(false),
+    stopped: false,
     categoryId: "",
     pic1: "",
     pic2: "",
     pic3: "",
     pic4: "",
-    isPublished: Boolean(false),
+    isPublished: false,
   })
   
   const dispatch = useDispatch();
@@ -80,18 +80,26 @@ export default () => {
                 <Col md={3} className="mb-3">
                   <Form.Group id="stopped">
                     <Form.Label>Stop sale</Form.Label>
-                    <Form.Select name="stopped" onChange={handleChange} defaultValue={Boolean(false)}>
-                      <option value={Boolean(true)}>Yes</option>
-                      <option value={Boolean(false)}>No</option>
+                    <Form.Select name="stopped" onChange={(e) => { 
+                      setValueForm({
+                        ...valueForm, [e.target.name]: e.target.value === "true" 
+                      });
+                    }} defaultValue={"false"}>
+                      <option value="true">Yes</option>
+                      <option value="false">No</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
                 <Col md={3} className="mb-3">
                   <Form.Group id="isPublished">
                     <Form.Label>Published</Form.Label>
-                    <Form.Select name="isPublished" onChange={handleChange} defaultValue={Boolean(false)}>
-                      <option value={Boolean(true)}>Yes</option>
-                      <option value={Boolean(false)}>No</option>
+                    <Form.Select name="isPublished" onChange={(e) => { 
+                      setValueForm({
+                        ...valueForm, [e.target.name]: e.target.value === "true" 
+                      });
+                    }} defaultValue={"false"}>
+                      <option value={"true"}>Yes</option>
+                      <option value={"false"}>No</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>

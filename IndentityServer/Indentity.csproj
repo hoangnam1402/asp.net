@@ -26,11 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibrary\ClassLibrary.csproj" />
-    <ProjectReference Include="..\Customer\Customer.csproj" />
-  </ItemGroup>
-	
-  <ItemGroup>
     <ProjectReference Include="..\BackEnd\BackEnd.csproj" />
   </ItemGroup>
 
