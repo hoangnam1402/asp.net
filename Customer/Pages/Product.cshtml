@@ -67,7 +67,8 @@
                                     <h6>@x.Name</h6>
                                     <a href="#" class="add-cart">+ Add To Cart</a>
                                     <div class="rating">
-                                        @if (@Model.productRatings.Where(y => y.OrderItemId == x.Id).ToList() != null)
+                                        <p style="color:red">New</p>
+@*                                        @if (@Model.productRatings.Where(y => y.OrderItemId == x.Id).ToList() != null)
                                         {
                                             for (var i = 1; i <= 5; i++)
                                             {
@@ -83,7 +84,7 @@
                                         {
                                             <p style="color:red">New</p>
                                         }
-                                    </div>
+*@                                    </div>
                                     <h5>@x.cost Đ</h5>
                                 </div>
                             </div>

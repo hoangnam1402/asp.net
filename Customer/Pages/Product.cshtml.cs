@@ -35,7 +35,7 @@ namespace Customer.Pages
         {
             products = productClass.GetProduct();
             categories = categoryClass.GetCategories();
-            productRatings = productClass.GetAllRating();
+            //productRatings = productClass.GetAllRating();
             if (category != null)
             {
                 products = products.Where(x => x.CategoryId.ToString() == category).ToList();

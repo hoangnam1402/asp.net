@@ -7,18 +7,21 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using ClassLibrary.Interface;
 using BackEnd.DTO.OrderDTO;
 using BackEnd.DTO.ProductRatingDTO;
+using System.Security.Claims;
+using BackEnd.Model;
+using Microsoft.AspNetCore.Identity;
 
 namespace Customer.Pages
 {
     [Authorize]
     public class CheckoutModel : PageModel
     {
-        private readonly ICustomerClass _metaIdentityUserService;
+        private readonly UserManager<User> _metaIdentityUserService;
         private readonly IOrderClass _orderService;
         private readonly IOrderItemClass _orderItemService;
         private readonly IProductRatingClass _productRatingService;
 
-        public CheckoutModel(ICustomerClass metaIdentityUserService, IOrderClass orderService,
+        public CheckoutModel(UserManager<User> metaIdentityUserService, IOrderClass orderService,
             IOrderItemClass orderItemService, IProductRatingClass productRatingService)
         {
             _metaIdentityUserService = metaIdentityUserService;
@@ -39,7 +42,7 @@ namespace Customer.Pages
                 return RedirectToPage("/Login");
 
             Cart = SessionHelper.GetObjectFromJson<List<ProductCartDto>>(HttpContext.Session, "cart");
-            CurrentUser = await _metaIdentityUserService.GetById(User.Claims.FirstOrDefault(u => u.Type == "sub").Value);
+            CurrentUser = await _metaIdentityUserService.GetById(User.Claims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier).Value);
             CreateOrder = new CreateOrderDto
             {
                 Name = CurrentUser.Name,
