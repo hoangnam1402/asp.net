@@ -5,9 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using BackEnd.DTO.ProductDTO;
 using EnsureThat;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BackEnd.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [ApiController]
     [Route("api/[controller]")]
     public class ProductController : ControllerBase

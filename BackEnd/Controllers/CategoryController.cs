@@ -5,9 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using BackEnd.DTO.CategoryDTO;
 using EnsureThat;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BackEnd.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [ApiController]
     [Route("api/[controller]")]
     public class CategoryController : ControllerBase

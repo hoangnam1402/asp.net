@@ -39,13 +39,14 @@ namespace ClassLibrary.Service
 
             return product;
         }
-        //public List<ProductRating> GetAllRating()
-        //{
-        //    if (_context.productsRating == null)
-        //        return null;
-        //    var rating = _context.productsRating.ToList();
-        //    return rating;
-        //}
+        public List<ProductRating> GetAllRating()
+        {
+            var rating = _context.productsRating;
+            if (rating.Count() == 0)
+                return null;
+
+            return rating.ToList();
+        }
 
     }
 }

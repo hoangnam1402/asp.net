@@ -23,6 +23,7 @@ namespace BackEnd.Profiles
             //Customer
             CreateMap<CreateUserDto, BackEnd.Model.User>(memberList: AutoMapper.MemberList.None);
             CreateMap<BackEnd.Model.User, ReadUserDto>(memberList: AutoMapper.MemberList.None);
+            CreateMap<ReadUserDto, BackEnd.Model.User>(memberList: AutoMapper.MemberList.None);
 
             //Order
             CreateMap<CreateOrderDto, BackEnd.Model.Order>(memberList: AutoMapper.MemberList.None);

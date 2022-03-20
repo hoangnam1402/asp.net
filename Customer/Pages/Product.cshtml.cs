@@ -29,13 +29,13 @@ namespace Customer.Pages
         [BindProperty]
         public List<Category> categories { get; set; }
 
-        public List<ProductRating> productRatings { get; set; }
+        public List<ProductRating> ratings { get; set; }
 
         public void OnGet()
         {
             products = productClass.GetProduct();
             categories = categoryClass.GetCategories();
-            //productRatings = productClass.GetAllRating();
+            ratings = productClass.GetAllRating();
             if (category != null)
             {
                 products = products.Where(x => x.CategoryId.ToString() == category).ToList();

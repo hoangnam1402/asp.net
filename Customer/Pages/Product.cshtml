@@ -67,12 +67,11 @@
                                     <h6>@x.Name</h6>
                                     <a href="#" class="add-cart">+ Add To Cart</a>
                                     <div class="rating">
-                                        <p style="color:red">New</p>
-@*                                        @if (@Model.productRatings.Where(y => y.OrderItemId == x.Id).ToList() != null)
+                                        @if (@Model.ratings != null && @Model.ratings.Where(y => y.OrderItemId == x.Id) != null)
                                         {
                                             for (var i = 1; i <= 5; i++)
                                             {
-                                                if (i <= @Model.productRatings.Where(y => y.OrderItemId == x.Id).Select(y => y.Rating).Average() )
+                                                if (i <= @Model.ratings.Where(y => y.OrderItemId == x.Id).Select(y => y.Rating).Average() )
                                                 {
                                                     <i class="fa fa-star"></i>
                                                 }else
@@ -84,7 +83,7 @@
                                         {
                                             <p style="color:red">New</p>
                                         }
-*@                                    </div>
+                                    </div>
                                     <h5>@x.cost Đ</h5>
                                 </div>
                             </div>

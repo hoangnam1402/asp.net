@@ -13,6 +13,6 @@ namespace ClassLibrary.Interface
     {
         Task<IdentityResult> Register(CreateUserDto request, string role);
 
-        Task<ReadUserDto> GetById(string id);
+        Task<User> GetById(string id);
     }
 }

@@ -9,29 +9,28 @@ using BackEnd.DTO.OrderDTO;
 using BackEnd.DTO.ProductRatingDTO;
 using System.Security.Claims;
 using BackEnd.Model;
-using Microsoft.AspNetCore.Identity;
 
 namespace Customer.Pages
 {
     [Authorize]
     public class CheckoutModel : PageModel
     {
-        private readonly UserManager<User> _metaIdentityUserService;
-        private readonly IOrderClass _orderService;
-        private readonly IOrderItemClass _orderItemService;
-        private readonly IProductRatingClass _productRatingService;
+        private readonly ICustomerClass _customerClass;
+        private readonly IOrderClass _orderClass;
+        private readonly IOrderItemClass _orderItemClass;
+        private readonly IProductRatingClass _productRatingClass;
 
-        public CheckoutModel(UserManager<User> metaIdentityUserService, IOrderClass orderService,
-            IOrderItemClass orderItemService, IProductRatingClass productRatingService)
+        public CheckoutModel(ICustomerClass customerClass, IOrderClass orderClass,
+            IOrderItemClass orderItemClass, IProductRatingClass productRatingClass)
         {
-            _metaIdentityUserService = metaIdentityUserService;
-            _orderService = orderService;
-            _orderItemService = orderItemService;
-            _productRatingService = productRatingService;
+            _customerClass = customerClass;
+            _orderClass = orderClass;
+            _orderItemClass = orderItemClass;
+            _productRatingClass = productRatingClass;
         }
 
         public List<ProductCartDto> Cart { get; set; }
-        public ReadUserDto CurrentUser { get; set; }
+        public User CurrentUser { get; set; }
 
         [BindProperty]
         public CreateOrderDto CreateOrder { get; set; }
@@ -42,7 +41,7 @@ namespace Customer.Pages
                 return RedirectToPage("/Login");
 
             Cart = SessionHelper.GetObjectFromJson<List<ProductCartDto>>(HttpContext.Session, "cart");
-            CurrentUser = await _metaIdentityUserService.GetById(User.Claims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier).Value);
+            CurrentUser = await _customerClass.GetById(User.Claims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier).Value);
             CreateOrder = new CreateOrderDto
             {
                 Name = CurrentUser.Name,
@@ -74,7 +73,7 @@ namespace Customer.Pages
                     CreateOrder.TotalPrice = Cart.Sum(p => p.Quantity * p.Product.cost);
                     CreateOrder.Status = "Success";
                     //CreateOrder.CreatedBy = CreateOrder.UpdatedBy = userId;
-                    ReadOrderDto order = await _orderService.CreateOrder(CreateOrder);
+                    ReadOrderDto order = await _orderClass.CreateOrder(CreateOrder);
                     List<CreateOrderItemDto> createOrderItemDtos = new List<CreateOrderItemDto>();
                     List<CreateProductRatingDto> createProductRatingDtos = new List<CreateProductRatingDto>();
                     foreach (var item in Cart)
@@ -98,14 +97,14 @@ namespace Customer.Pages
                         });
                     }
 
-                    List<ReadOrderItemDto> orderItemDtos = await _orderItemService.AddRangeOrderItemsAsync(createOrderItemDtos);
+                    List<ReadOrderItemDto> orderItemDtos = await _orderItemClass.AddRangeOrderItemsAsync(createOrderItemDtos);
 
                     for (int i = 0; i < orderItemDtos.Count; i++)
                     {
                         createProductRatingDtos[i].OrderItemId = orderItemDtos[i].Id;
                     }
 
-                    await _productRatingService.AddRangeProductRatingAsync(createProductRatingDtos);
+                    await _productRatingClass.AddRangeProductRatingAsync(createProductRatingDtos);
                     TempData["AlertMessage"] = "Order Product Successfully!";
                     SessionHelper.Remove(HttpContext.Session, "cart");
                     Cart = null;

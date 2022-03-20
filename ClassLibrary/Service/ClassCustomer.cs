@@ -26,12 +26,12 @@ namespace ClassLibrary.Service
             _mapper = mapper;
         }
 
-        public async Task<ReadUserDto> GetById(string id)
+        public async Task<User> GetById(string id)
         {
             User user = await _userManager.FindByIdAsync(id);
             if (user == null)
                 return null;
-            return _mapper.Map<ReadUserDto>(user);
+            return user;
         }
 
         public async Task<IdentityResult> Register(CreateUserDto request, string role)
@@ -52,14 +52,13 @@ namespace ClassLibrary.Service
             {
                 var user = new User
                 {
-                    UserName = request.UserName,
+                    UserName = request.Name,
                     Name = request.Name,
                     PhoneNumber = request.PhoneNumber,
                     PhoneNumberConfirmed = true,
                     Address = request.Address,
                 };
                 var result = await _userManager.CreateAsync(user, request.Password);
-
 
                 result = _userManager.AddToRoleAsync(user, role).Result;
 

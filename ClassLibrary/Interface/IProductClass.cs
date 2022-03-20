@@ -16,6 +16,6 @@ namespace ClassLibrary.Interface
 
         public Product GetProductDetail(Guid id);
 
-        //public List<ProductRating> GetAllRating();
+        public List<ProductRating> GetAllRating();
     }
 }

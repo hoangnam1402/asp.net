@@ -12,6 +12,9 @@ namespace ClassLibrary
     {
         public static void AddDataAccessorLayer(this IServiceCollection services, IConfiguration configuration)
         {
+            //services.AddDataAccessorLayer(configuration);
+            //services.AddIdentityLayer(configuration);
+
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddTransient<ICustomerClass, ClassCustomer>();
