@@ -33,6 +33,7 @@ export const getAllCategoriesAsync = createAsyncThunk(
       const response = await axiosClient.get(`/category`);
       return response;
     } catch (error) {
+      console.log(error);
       return rejectWithValue(error.response);
     }
   }

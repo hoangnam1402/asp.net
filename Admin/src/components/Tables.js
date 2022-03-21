@@ -282,10 +282,12 @@ export const TransactionsTable = ({categories,handleDelete,isCreate, valueForm ,
 
 export const ProductTable = ({products, valueSearch, handleDelete}) => {
   const totalProducts = products.length;
+  console.log(valueSearch);
 
   const TableRow = ({listProduct}) => {
     const istopped = `${listProduct.stopped}` === "true" ? "danger" : "success"
     const published = `${listProduct.isPublished}` === "true" ? "success" : "warning"
+
     return (
       <tr>
         {/* <td>
@@ -409,25 +411,8 @@ export const CustomerTable = ({customer}) => {
         </td>
         <td>
           <span className="fw-normal">
-            {listCustomer.phonenumber}
+            {listCustomer.phoneNumber}
           </span>
-        </td>
-        <td>
-          <Dropdown as={ButtonGroup}>
-            <Dropdown.Toggle as={Button} split variant="link" className="text-dark m-0 p-0">
-              <span className="icon icon-sm">
-                <FontAwesomeIcon icon={faEllipsisH} className="icon-dark" />
-              </span>
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item>
-                <FontAwesomeIcon icon={faEye} className="me-2" /> View Details
-              </Dropdown.Item>
-              <Dropdown.Item className="text-danger">
-                <FontAwesomeIcon icon={faTrashAlt} className="me-2" /> Remove
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
         </td>
       </tr>
     );
@@ -448,6 +433,11 @@ export const CustomerTable = ({customer}) => {
             {customer.map(item => <TableRow listCustomer={item} />)}
           </tbody>
         </Table>
+        <Card.Footer>
+          <small className="fw-bold">
+            Total <b>{totalCustomer}</b> customer
+          </small>
+        </Card.Footer>
       </Card.Body>
     </Card>
   );

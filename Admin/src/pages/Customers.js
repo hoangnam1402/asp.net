@@ -1,9 +1,9 @@
-import React,{useEffect, useState} from "react";
+import React,{useEffect} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCog, faHome, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup, Dropdown } from '@themesberg/react-bootstrap';
-import {useDispatch, useSelector} from 'react-redux';
 
+import {useDispatch, useSelector} from 'react-redux';
 import { CustomerTable } from "../components/Tables";
 import { getAllUsersAsync, setCustomer } from "../features/userSlice";
 
@@ -15,7 +15,6 @@ export default () => {
   useEffect(() => {
     dispatch(getAllUsersAsync());
   },[])
-
   return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
@@ -35,11 +34,6 @@ export default () => {
           </ButtonGroup>
         </div>
  */}      </div>
-
-      <div className="table-settings mb-4">
-        <Row className="justify-content-between align-items-center">
-        </Row>
-      </div>
 
       {customer && <CustomerTable customer={customer}/>}
     </>

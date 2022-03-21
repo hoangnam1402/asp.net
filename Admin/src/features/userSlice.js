@@ -27,7 +27,7 @@ const initialState = {
         })
         .addCase(getAllUsersAsync.fulfilled, (state, action) => {
           console.log(action.payload);
-          state.users = action.payload;
+          state.customer = action.payload;
         })
         .addCase(getAllUsersAsync.rejected, (state, action) => {
           state.loading = false

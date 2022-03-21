@@ -15,9 +15,9 @@ axiosClient.interceptors.request.use(async (config) => {
   // Handle token here ...
   const user = localStorage.getItem("user");
   
-  if (user) {
+  /* if (user) {
       config.headers.Authorization = `Bearer ${JSON.parse(user).access_token}`;
-  }
+  } */
   return config;
 })
 
