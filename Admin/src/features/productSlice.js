@@ -70,10 +70,10 @@ export const productSlice = createSlice({
     setProduct: (state, action) => {
       state.product = action.payload;
     },
-    setCurrentPage: (state, action) => {
+/*     setCurrentPage: (state, action) => {
       state.currentPage = action.payload;
     },
-    
+ */    
   },
   extraReducers: (builder) => {
     builder

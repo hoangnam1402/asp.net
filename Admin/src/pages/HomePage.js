@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect, useHistory } from "react-router-dom";
 import { Routes } from "../routes";
 
 // pages
@@ -9,10 +9,11 @@ import DashboardOverview from "./dashboard/DashboardOverview";
 import Transactions from "./Transactions";
 import Customers from "./Customers";
 import Products from "./Products";
-import NewProduct from "./NewProduct"
+import NewProduct from "./NewProduct";
+import Signin from "./Signin";
 import Settings from "./Settings";
 import BootstrapTables from "./tables/BootstrapTables";
-import Signin from "./examples/Signin";
+/* import Signin from "./examples/Signin"; */
 import Signup from "./examples/Signup";
 import ForgotPassword from "./examples/ForgotPassword";
 import ResetPassword from "./examples/ResetPassword";
@@ -66,6 +67,11 @@ const RouteWithLoader = ({ component: Component, ...rest }) => {
 };
 
 const RouteWithSidebar = ({ component: Component, ...rest }) => {
+  const history = useHistory();
+  if(localStorage.getItem("user") != "admin") 
+  {
+    history.push("/Sign-in")
+  }
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -104,11 +110,11 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
 export default () => (
   <Switch>
 {/*    
-    <RouteWithLoader exact path={Routes.Signin.path} component={Signin} />
     <RouteWithLoader exact path={Routes.Signup.path} component={Signup} />
     <RouteWithLoader exact path={Routes.ForgotPassword.path} component={ForgotPassword} />
     <RouteWithLoader exact path={Routes.ResetPassword.path} component={ResetPassword} />
     <RouteWithLoader exact path={Routes.Lock.path} component={Lock} /> */}
+    <RouteWithLoader exact path={Routes.Signin.path} component={Signin} />
     <RouteWithLoader exact path={Routes.NotFound.path} component={NotFoundPage} />
     <RouteWithLoader exact path={Routes.ServerError.path} component={ServerError} />
 

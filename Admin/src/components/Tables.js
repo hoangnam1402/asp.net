@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 import { Routes } from "../routes";
 import { pageVisits, pageTraffic, pageRanking } from "../data/tables";
 import transactions from "../data/transactions";
-import customer from "../data/transactions";
 
 import commands from "../data/commands";
 import {useDispatch, useSelector} from 'react-redux'
@@ -287,7 +286,6 @@ export const ProductTable = ({products, valueSearch, handleDelete}) => {
   const TableRow = ({listProduct}) => {
     const istopped = `${listProduct.stopped}` === "true" ? "danger" : "success"
     const published = `${listProduct.isPublished}` === "true" ? "success" : "warning"
-  console.log(listProduct);
     return (
       <tr>
         {/* <td>
@@ -393,31 +391,25 @@ export const ProductTable = ({products, valueSearch, handleDelete}) => {
   );
 };
 
-export const CustomerTable = () => {
+export const CustomerTable = ({customer}) => {
   const totalCustomer = customer.length;
 
-  const TableRow = (props) => {
-    const { invoiceNumber, subscription, price, issueDate, dueDate, status } = props;
+  const TableRow = ({listCustomer}) => {
     return (
       <tr>
         <td>
           <span className="fw-normal">
-            {subscription}
+            {listCustomer.name}
           </span>
         </td>
         <td>
           <span className="fw-normal">
-            {issueDate}
+            {listCustomer.address}
           </span>
         </td>
         <td>
           <span className="fw-normal">
-            {dueDate}
-          </span>
-        </td>
-        <td>
-          <span className="fw-normal">
-            ${parseFloat(price).toFixed(2)}
+            {listCustomer.phonenumber}
           </span>
         </td>
         <td>
@@ -447,36 +439,15 @@ export const CustomerTable = () => {
         <Table hover className="user-table align-items-center">
           <thead>
             <tr>
-              <th className="border-bottom">#</th>
-              <th className="border-bottom">Bill For</th>
-              <th className="border-bottom">Issue Date</th>
-              <th className="border-bottom">Due Date</th>
-              <th className="border-bottom">Total</th>
-              <th className="border-bottom">Status</th>
-              <th className="border-bottom">Action</th>
+              <th className="border-bottom">Name</th>
+              <th className="border-bottom">Address</th>
+              <th className="border-bottom">PhoneNumber</th>
             </tr>
           </thead>
           <tbody>
-            {transactions.map(t => <TableRow key={`transaction-${t.invoiceNumber}`} {...t} />)}
+            {customer.map(item => <TableRow listCustomer={item} />)}
           </tbody>
         </Table>
-        <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">
-          <Nav>
-            <Pagination className="mb-2 mb-lg-0">
-              <Pagination.Prev>
-                Previous
-              </Pagination.Prev>
-              <Pagination.Item active>1</Pagination.Item>
-              <Pagination.Item>2</Pagination.Item>
-              <Pagination.Item>3</Pagination.Item>
-              <Pagination.Item>4</Pagination.Item>
-              <Pagination.Item>5</Pagination.Item>
-              <Pagination.Next>
-                Next
-              </Pagination.Next>
-            </Pagination>
-          </Nav>
-        </Card.Footer>
       </Card.Body>
     </Card>
   );

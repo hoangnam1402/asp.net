@@ -34,7 +34,7 @@ namespace Customer.Pages
 
         [BindProperty]
         public CreateOrderDto CreateOrder { get; set; }
-        public decimal TotalMoney { get; set; }
+        public int TotalMoney { get; set; }
         public async Task<IActionResult> OnGet()
         {
             if (!User.Identity.IsAuthenticated)
@@ -49,17 +49,12 @@ namespace Customer.Pages
                 PhoneNumber = CurrentUser.PhoneNumber
             };
             if (Cart == null)
-                return RedirectToPage("/");
+                return RedirectToPage("/Product");
             TotalMoney = Cart.Sum(p => p.Quantity * p.Product.cost);
 
             return Page();
         }
 
-        /* 
-                1. Create Order
-                2. Create List Order Item 
-                3. Create List Rating
-        */
         public async Task<IActionResult> OnPostAsync()
         {
             if (ModelState.IsValid)
@@ -69,7 +64,7 @@ namespace Customer.Pages
 
                 if (Cart != null)
                 {
-                    Guid userId = Guid.Parse(User.Claims.FirstOrDefault(u => u.Type == "sub").Value);
+                    Guid userId = Guid.Parse(User.Claims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier).Value);
                     CreateOrder.TotalPrice = Cart.Sum(p => p.Quantity * p.Product.cost);
                     CreateOrder.Status = "Success";
                     //CreateOrder.CreatedBy = CreateOrder.UpdatedBy = userId;
@@ -105,7 +100,6 @@ namespace Customer.Pages
                     }
 
                     await _productRatingClass.AddRangeProductRatingAsync(createProductRatingDtos);
-                    TempData["AlertMessage"] = "Order Product Successfully!";
                     SessionHelper.Remove(HttpContext.Session, "cart");
                     Cart = null;
                 }

@@ -34,8 +34,6 @@ export default () => {
   useEffect(() => {
     dispatch(getAllCategoriesAsync());
   },[])
-  console.log(valueForm);
-  console.log(categories);
 
   return (
     <>

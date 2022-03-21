@@ -7,8 +7,9 @@ namespace Customer.Pages
     [Authorize]
     public class LoginModel : PageModel
     {
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            return Redirect("/");
         }
     }
 }

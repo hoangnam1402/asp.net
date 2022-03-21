@@ -1,9 +1,8 @@
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axiosClient from "../utils/axios";
+
 const initialState = {
     users: [],
-    currentPage: 1,
-    totalPages: 1,
-    totalItems: 0,
-    loading: false
   };
 
   export const getAllUsersAsync = createAsyncThunk(
@@ -28,11 +27,7 @@ const initialState = {
         })
         .addCase(getAllUsersAsync.fulfilled, (state, action) => {
           console.log(action.payload);
-          state.users = action.payload.items["$values"];
-          state.totalPages = action.payload.totalPages;
-          state.currentPage = action.payload.currentPage;
-          state.totalItems = action.payload.totalItems;
-          state.loading = false
+          state.users = action.payload;
         })
         .addCase(getAllUsersAsync.rejected, (state, action) => {
           state.loading = false

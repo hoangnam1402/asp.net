@@ -1,4 +1,7 @@
 using BackEnd.Data;
+using BackEnd.Model;
+using Identity.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +19,27 @@ builder.Services.AddCors(options =>
                       });
 });
 
+builder.Services.AddDbContext<AspNetIdentityDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection"), b =>
+                    b.MigrationsAssembly(typeof(AspNetIdentityDbContext).Assembly.FullName)
+                ));
+builder.Services.AddIdentityCore<User>()
+    .AddUserManager<UserManager<User>>()
+    .AddRoles<IdentityRole>()
+    .AddRoleManager<RoleManager<IdentityRole>>()
+    .AddEntityFrameworkStores<AspNetIdentityDbContext>();
+
+builder.Services.Configure<IdentityOptions>(options =>
+
+{
+    // Default Password settings.
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 1;
+});
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {

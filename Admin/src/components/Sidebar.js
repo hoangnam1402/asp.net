@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import SimpleBar from 'simplebar-react';
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import { CSSTransition } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faBoxOpen, faChartPie, faCog, faFileAlt, faHandHoldingUsd, faSignOutAlt, faTable, faTimes, faCalendarAlt, faMapPin, faInbox, faRocket } from "@fortawesome/free-solid-svg-icons";
@@ -14,6 +14,7 @@ import ReactHero from "../assets/img/technologies/react-hero-logo.svg";
 import ProfilePicture from "../assets/img/team/profile-picture-3.jpg";
 
 export default (props = {}) => {
+  const history = useHistory();
   const location = useLocation();
   const { pathname } = location;
   const [show, setShow] = useState(false);
@@ -157,8 +158,14 @@ export default (props = {}) => {
                 <NavItem title="Tooltips" link={Routes.Tooltips.path} />
               </CollapsableNavItem>
               <NavItem external title="Themesberg" link="https://themesberg.com" target="_blank" image={ThemesbergLogo} />
-              <Button as={Link} to={Routes.Upgrade.path} variant="secondary" className="upgrade-to-pro"><FontAwesomeIcon icon={faRocket} className="me-1" /> Upgrade to Pro</Button>
- */}            </Nav>
+              <Button as={Link} to={Routes.Upgrade.path} variant="secondary" className="upgrade-to-pro"><FontAwesomeIcon icon={faRocket} className="me-1" /> Upgrade to Pro</Button> */}          
+                <Button variant="primary" type="submit" className="w-100" onClick={() => {
+                  localStorage.removeItem("user");
+                  history.push("/Sign-in")
+                }}>
+                  Logout
+                </Button>
+              </Nav>
           </div>
         </SimpleBar>
       </CSSTransition>

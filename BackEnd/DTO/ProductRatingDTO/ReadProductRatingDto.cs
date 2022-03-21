@@ -6,7 +6,7 @@ namespace BackEnd.DTO.ProductRatingDTO
     {
         public string Comment { get; set; }
 
-        public float Rating { get; set; }
+        public int Rating { get; set; }
 
         public Guid ProductId { get; set; }
 
