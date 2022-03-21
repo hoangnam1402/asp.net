@@ -33,7 +33,7 @@ namespace ClassLibrary.Service
             return _mapper.Map<ReadOrderDto>(order);
         }
 
-        public async Task<ReadOrderDto> GetOrderByIdAysnc(Guid id)
+        public async Task<ReadOrderDto> GetOrderByIdAsync(Guid id)
         {
             var query = await _context.orders.FirstOrDefaultAsync(x => x.Id == id);
 

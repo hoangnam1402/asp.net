@@ -1,0 +1,132 @@
+﻿@page
+@model Customer.Pages.OrderModel
+@{
+}
+
+<section class="shop-details">
+    <div class="container">
+        <div class="container-fluid my-5 d-flex justify-content-center " style="gap: 10%">
+            <div class="card card-1" style="width: 50%">
+                <div class="card-header bg-white">
+                    <div class="media flex-sm-row flex-column-reverse justify-content-between ">
+                        <div class="col my-auto">
+                            <h4 class="mb-0">Thanks for your order,<span class="change-color" style="color: red">@User.Claims.FirstOrDefault(o => o.Type == "name").Value</span> !</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row justify-content-between mb-3">
+                        <div class="col-auto">
+                            <h6 class="color-1 mb-0 change-color">Receipt</h6>
+                        </div>
+                        <div class="col-auto "> <small>Order Id : @Model.Order.Id.ToString().Substring(0,8)</small> </div>
+                    </div>
+                    @if (@Model.Order != null)
+                   {
+                       @foreach (var item in @Model.Order.OrderItems)
+                      {
+                          <div class="row">
+                        <div class="col">
+                            <div class="card card-2">
+                                <div class="card-body">
+                                    <div class="media">
+                                        <div> <small>Order Detail Id : @item.Id.ToString().Substring(0,8)</small> </div>
+                                        <div class="sq align-self-center d-flex" style="justify-content: space-between; align-items: center"> 
+                                            <img class="img-fluid my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" src="@item.Product.Pic1" width="135" height="135" /> 
+                                    
+                                            @if(@item.ProductRating.IsRated == false){
+                                                <a asp-page="/Account/HistoryOrder/Rating" asp-route-id="@item.ProductRating.Id" class="btn btn-secondary btn-primary-hover"><span>Rating</span></a>
+                                            }
+
+                                        </div>
+                                        <div class="media-body my-auto text-right">
+                                            <div class="row my-auto flex-column flex-md-row">
+                                                <div class="col-auto my-auto">
+                                                    <h6 class="mb-0"> @item.Product.Name</h6>
+                                                </div>
+                                                <div class="col-auto my-auto"> <small>Qty: @item.Quantity</small></div>
+                                         
+                                                <div class="col-auto my-auto">
+                                                    <strong class="mb-0">@(item.Quantity * item.Product.cost) Đ</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="my-3 ">
+                                    <div class="row">
+                                        <div class="col-md-3 mb-3"> <small> Track Order <span><i class=" ml-2 fa fa-refresh" aria-hidden="true"></i></span></small> </div>
+                                        <div class="col mt-auto">
+                                            <div class="progress my-auto">
+                                                <div class="progress-bar progress-bar rounded" style="width: 100%" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="media row justify-content-between ">
+                                                <div class="col-auto flex-col-auto"><small class="text-right mr-sm-2">Delivered</small><span> <i class="fa fa-circle"></i></span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                      }
+                   }
+
+                    <div class="row mt-4">
+                        <div class="col">
+                            <div class="row justify-content-between">
+                                <div class="col-auto">
+                                    <p class="mb-1"><b>Total</b></p>
+                                </div>
+                                <div class="flex-sm-col col-auto">
+                                    <p class="mb-1">$@Model.Order.OrderItems.Sum(i => i.Quantity * i.Product.cost)</p>
+                                </div>
+                            </div>
+                            <div class="row justify-content-between">
+                                <div class="flex-sm-col text-right col">
+                                    <p class="mb-1"> <b>Discount</b></p>
+                                </div>
+                                <div class="flex-sm-col col-auto">
+                                    <p class="mb-1">0 Đ</p>
+                                </div>
+                            </div>
+                            <div class="row justify-content-between">
+                                <div class="flex-sm-col text-right col">
+                                    <p class="mb-1"><b>Delivery Charges</b></p>
+                                </div>
+                                <div class="flex-sm-col col-auto">
+                                    <p class="mb-1">Free</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row invoice ">
+                        <div class="col">
+                            <p class="mb-1">Invoice Date : @Model.Order.CreatedDate.ToString("dd MMM, yyyy")</p>
+                        </div>
+
+                    </div>
+                    <div class="row invoice ">
+                        <div class="col">
+                            <h3>Delivery Address</h3>
+                            <p class="mb-1">Name : @Model.Order.Name</p>
+                            <p class="mb-1">Phone Number : @Model.Order.PhoneNumber</p>
+                            <p class="mb-1">Address : @Model.Order.Address</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="jumbotron-fluid">
+                        <div class="row justify-content-between ">
+                            <div class="col-auto my-auto ">
+                                <h2 class="mb-0 font-weight-bold">TOTAL PAID</h2>
+                            </div>
+                            <div class="col-auto my-auto ml-auto">
+                                <h1 class="display-3 ">$@Model.Order.OrderItems.Sum(i => i.Quantity * i.Product.cost).ToString("0.##")</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

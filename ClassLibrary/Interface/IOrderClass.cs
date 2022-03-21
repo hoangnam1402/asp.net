@@ -11,6 +11,6 @@ namespace ClassLibrary.Interface
     {
         Task<ReadOrderDto> CreateOrder(CreateOrderDto createOrderDto);
 
-        Task<ReadOrderDto> GetOrderByIdAysnc(Guid id);
+        Task<ReadOrderDto> GetOrderByIdAsync(Guid id);
     }
 }

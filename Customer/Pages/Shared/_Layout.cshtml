@@ -1,12 +1,12 @@
 ﻿@using BackEnd.DTO.ProductDTO
 @inject IHttpContextAccessor HttpContextAccessor
 @{
-    List<ProductCartDto> Cart = Helper.SessionHelper.GetObjectFromJson<List<ProductCartDto>>(HttpContextAccessor.HttpContext.Session, "cart");
-    int totalItem = 0;
-    if (Cart != null)
-    {
-        totalItem = Cart.Sum(i => i.Quantity);
-    }
+    //List<ProductCartDto> Cart = Helper.SessionHelper.GetObjectFromJson<List<ProductCartDto>>(HttpContextAccessor.HttpContext.Session, "cart");
+    //int totalItem = 0;
+    //if (Cart != null)
+    //{
+    //    totalItem = Cart.Sum(i => i.Quantity);
+    //}
 }
 
 <!DOCTYPE html>
@@ -38,9 +38,41 @@
     <link rel="stylesheet" href="~/css/style.css" type="text/css">
 </head>
 <body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
 
     <!-- Header Section Begin -->
     <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-7">
+                        <div class="header__top__left">
+                            <p>Welcome to our shop</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-5">
+                        <div class="header__top__right">
+                            <div class="header__top__links">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                   <a asp-page="/Index"> @User.Claims.FirstOrDefault(claim => claim.Type == "name").Value </a>
+                                   <a asp-page="/Logout"><i class="fa fa-user"></i> Logout</a>
+                                }
+                                else
+                                {
+
+                                    <a asp-area="" asp-page="/Login"><i class="fa fa-user"></i> Login</a>
+                                    <a asp-area="" asp-page="/Register"><i class="fa fa-user"></i> Register</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-3">
@@ -48,26 +80,21 @@
                         <a asp-area="" asp-page="/Index"><img src="~/img/logo.png" alt=""></a>
                     </div>
                 </div>
-                <div class="header__top__right">
-
-                    @if (User.Identity.IsAuthenticated)
-                    {
-@*                        <a asp-page="/Profile" asp-route-id="@User.Claims.FirstOrDefault(claim => claim.Type == "sub").Value">Hello @User.Claims.FirstOrDefault(claim => claim.Type == "name").Value </a>
-*@                        <a asp-page="/Logout"><i class="fa fa-user"></i> Logout</a>
-                    }
-                    else
-                    {
-
-                        <a asp-area="" asp-page="/Login"><i class="fa fa-user"></i> Login</a>
-                        <a asp-area="" asp-page="/Register"><i class="fa fa-user"></i> Register</a>
-                    }
-                </div>
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
                             <li><a asp-area="" asp-page="/Index">Home</a></li>
                             <li><a asp-area="" asp-page="/Product">Product</a></li>
-                            <li><a asp-area="" asp-page="/Cart">Cart</a></li>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li><a href="#">Pages</a>
+                                    <ul class="dropdown">
+                                        <li><a asp-area="" asp-page="/Cart">Cart</a></li>
+                                        <li><a asp-area="" asp-page="/Order">Order</a></li>
+                                        <li><a asp-area="" asp-page="/Rating">Rating</a></li>
+                                    </ul>
+                                </li>
+                            }
                         </ul>
                     </nav>
                 </div>
