@@ -39,6 +39,8 @@ builder.Services.AddAuthentication(options =>
     options.SaveTokens = true;
 });
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 builder.Services.AddIdentityLayer(builder.Configuration);
 
 builder.Services.AddHttpContextAccessor();
