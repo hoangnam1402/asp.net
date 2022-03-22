@@ -5,7 +5,7 @@ namespace BackEnd.DTO.OrderDTO
 {
     public class CreateOrderDto
     {
-        public string Status { get; set; }
+        public string Status { get; set; } = "success";
 
         public int TotalPrice { get; set; }
 
@@ -17,8 +17,10 @@ namespace BackEnd.DTO.OrderDTO
         [MaxLength(255)]
         public string Address { get; set; }
 
+        [Required]
+        [MaxLength(50)]
         public string PhoneNumber { get; set; }
 
-        public string Note { get; set; }
+        public DateTime UpdatedDate { get; set; } = DateTime.Now;
     }
 }

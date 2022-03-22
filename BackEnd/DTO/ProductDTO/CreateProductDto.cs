@@ -20,7 +20,7 @@ namespace BackEnd.DTO.ProductDTO
 
         public Guid? CategoryId { get; set; }
 
-        public bool IsPublished { get; set; }
+        public bool IsFeatured { get; set; }
 
         [MaxLength(255)]
         public string Pic1 { get; set; }

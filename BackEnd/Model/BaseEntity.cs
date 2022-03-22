@@ -13,9 +13,9 @@ namespace BackEnd.Model
         [Key]
         public Guid Id { get; set; }
         [DataType(DataType.Date)]
-        public DateTime UpdatedDate { get; set; }
+        public DateTime ? UpdatedDate { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime CreatedDate { get; set; }
+        public DateTime ? CreatedDate { get; set; }
     }
 }

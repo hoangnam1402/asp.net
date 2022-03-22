@@ -17,9 +17,8 @@ namespace BackEnd.Model
         [MaxLength(50)]
         public string PhoneNumber { get; set; }
 
+        [MaxLength(255)]
         public string ? Address { get; set; }
-
-        public string Note { get; set; }
 
         public List<OrderItem> OrderItems { get; set; }
     }

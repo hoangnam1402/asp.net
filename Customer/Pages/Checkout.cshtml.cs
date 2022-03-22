@@ -66,7 +66,6 @@ namespace Customer.Pages
                 {
                     Guid userId = Guid.Parse(User.Claims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier).Value);
                     CreateOrder.TotalPrice = Cart.Sum(p => p.Quantity * p.Product.cost);
-                    CreateOrder.Status = "Success";
                     //CreateOrder.CreatedBy = CreateOrder.UpdatedBy = userId;
                     ReadOrderDto order = await _orderClass.CreateOrder(CreateOrder);
                     List<CreateOrderItemDto> createOrderItemDtos = new List<CreateOrderItemDto>();

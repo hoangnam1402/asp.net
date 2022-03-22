@@ -11,6 +11,8 @@ namespace BackEnd.Profiles
     {
         public AllProfile()
         {
+            AllowNullDestinationValues = true;
+
             //Product
             CreateMap<CreateProductDto, BackEnd.Model.Product>(memberList: AutoMapper.MemberList.None);
             CreateMap<BackEnd.Model.Product, ReadProductDto>(memberList: AutoMapper.MemberList.None);

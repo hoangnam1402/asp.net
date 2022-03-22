@@ -17,8 +17,6 @@ namespace BackEnd.DTO.OrderDTO
         [MaxLength(50)]
         public string PhoneNumber { get; set; }
 
-        public string Note { get; set; }
-
         public List<ReadOrderItemDto> OrderItems { get; set; }
     }
 }

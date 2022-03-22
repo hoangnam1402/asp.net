@@ -6,10 +6,10 @@ using Xunit;
 
 namespace UnitTest
 {
-    public class AutoMapperProfileShould
+    public class ProfileTest
     {
         [Fact]
-        public void BeValid()
+        public void Test1()
         {
             // Arrange
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AllProfile>());
