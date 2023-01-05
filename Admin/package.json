@@ -40,7 +40,6 @@
     "chartist-plugin-tooltips-updated": "^0.1.4",
     "firebase": "^9.6.8",
     "moment-timezone": "^0.5.31",
-    "node-sass": "^4.14.1",
     "oidc-client": "^1.11.5",
     "react": "^16.13.1",
     "react-chartist": "^0.14.4",
@@ -55,11 +54,12 @@
     "react-scripts": "3.4.3",
     "react-transition-group": "^4.4.1",
     "redux-oidc": "^4.0.0-beta1",
+    "sass": "^1.57.1",
     "simplebar-react": "^2.3.0",
     "sweetalert2": "^11.4.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts build",
     "build-local": "PUBLIC_URL=./ react-scripts build",
     "test": "react-scripts test",

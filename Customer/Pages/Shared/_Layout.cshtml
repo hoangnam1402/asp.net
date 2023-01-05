@@ -53,8 +53,8 @@
                             <div class="header__top__links">
                                 @if (User.Identity.IsAuthenticated)
                                 {
-                                   <a asp-page="/Index"> @User.Claims.FirstOrDefault(claim => claim.Type == "name").Value </a>
-                                   <a asp-page="/Logout"><i class="fa fa-user"></i> Logout</a>
+                                   <a asp-area="" asp-page="/Cart"> @User.Claims.FirstOrDefault(claim => claim.Type == "name").Value </a>
+                                   <a asp-area="" asp-page="/Logout"><i class="fa fa-user"></i> Logout</a>
                                 }
                                 else
                                 {

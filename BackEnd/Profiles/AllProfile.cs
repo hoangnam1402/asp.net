@@ -29,7 +29,7 @@ namespace BackEnd.Profiles
 
             //Order
             CreateMap<CreateOrderDto, BackEnd.Model.Order>().ReverseMap();
-            //CreateMap<BackEnd.Model.Order, ReadOrderDto>(memberList: AutoMapper.MemberList.None);
+            CreateMap<BackEnd.Model.Order, ReadOrderDto>(memberList: AutoMapper.MemberList.None);
 
             //OrderItem
             CreateMap<CreateOrderItemDto, BackEnd.Model.OrderItem>(memberList: AutoMapper.MemberList.None);
